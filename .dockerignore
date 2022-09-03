@@ -1,0 +1,15 @@
+.git/
+.github/
+.idea/
+target/
+*/target/
+*.iml
+*/*.iml
+.classpath
+.dockerignore
+.editorconfig
+.gitignore
+.java-version
+.project
+.settings
+README.md

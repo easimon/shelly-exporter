@@ -1,0 +1,82 @@
+name: Docker container build
+on: push
+
+env:
+  DOCKER_REGISTRY: ghcr.io
+  DOCKER_NAME: ghcr.io/${{ github.repository }}
+  # Failing builds (QEMU failure?):
+  #  - linux/ppc64le
+  #  - linux/s390x
+  # Failing builds: java.lang.SecurityException: Couldn't iterate through the jurisdiction policy files: unlimited
+  #  - linux/arm/v7
+  PLATFORMS: linux/amd64,linux/arm64/v8
+
+jobs:
+  build:
+    name: Build and publish Docker container
+    runs-on: ubuntu-22.04
+    steps:
+      - name: "Check out repository"
+        uses: actions/checkout@v3
+
+      - name: "Use branch or tag name as Docker tag"
+        run: |
+          echo "Using branch name as docker tag"
+          echo "DOCKER_TAG=$(echo ${{ github.ref_name }})" >> "${GITHUB_ENV}"
+
+      - name: "Main Branch: Use 'latest' as Docker tag"
+        if: github.ref_name == 'main'
+        run: |
+          echo "Using latest as docker tag"
+          echo "DOCKER_TAG=latest" >> "${GITHUB_ENV}"
+
+      - name: "Print docker image and tag name"
+        run: |
+          echo "Continuing to build ${DOCKER_NAME}:${DOCKER_TAG}"
+
+      - name: "Log in to Docker Registry"
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ${DOCKER_REGISTRY} -u ${{ github.actor }} --password-stdin
+
+      - name: "Set up QEMU"
+        uses: docker/setup-qemu-action@v2
+        with:
+          platforms: all
+
+      - name: "Set up Docker Buildx"
+        uses: docker/setup-buildx-action@v2
+        with:
+          install: true
+
+      - name: "Build the Docker builder image"
+        run: |
+          docker buildx build \
+            --cache-from "type=registry,ref=${DOCKER_NAME}-builder:latest" \
+            --cache-from "type=registry,ref=${DOCKER_NAME}-builder:${DOCKER_TAG}" \
+            --cache-to   "type=registry,ref=${DOCKER_NAME}-builder:${DOCKER_TAG}" \
+            --target builder \
+            --platform "${PLATFORMS}" \
+            .
+
+      - name: "Build the Docker test image (default platform only)"
+        run: |
+          docker buildx build \
+            --cache-from "type=registry,ref=${DOCKER_NAME}-builder:latest" \
+            --cache-from "type=registry,ref=${DOCKER_NAME}-builder:${DOCKER_TAG}" \
+            --cache-from "type=registry,ref=${DOCKER_NAME}-test:latest" \
+            --cache-from "type=registry,ref=${DOCKER_NAME}-test:${DOCKER_TAG}" \
+            --cache-to   "type=registry,ref=${DOCKER_NAME}-test:${DOCKER_TAG}" \
+            --target test \
+            .
+
+      - name: "Build the Docker image"
+        run: |
+          docker buildx build \
+            --cache-from "type=registry,ref=${DOCKER_NAME}-builder:latest" \
+            --cache-from "type=registry,ref=${DOCKER_NAME}-builder:${DOCKER_TAG}" \
+            --cache-from "type=registry,ref=${DOCKER_NAME}:latest" \
+            --cache-from "type=registry,ref=${DOCKER_NAME}:${DOCKER_TAG}" \
+            --tag "${DOCKER_NAME}:${DOCKER_TAG}" \
+            --platform "${PLATFORMS}" \
+            --push \
+            .

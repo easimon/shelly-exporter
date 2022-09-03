@@ -1,0 +1,60 @@
+name: JDK compatibility tests
+on:
+  push:
+    branches:
+      - main
+
+env:
+  DOCKER_REGISTRY: ghcr.io
+  DOCKER_NAME: ghcr.io/${{ github.repository }}
+
+jobs:
+  build:
+    name: "Build application for matrix test"
+    runs-on: ubuntu-22.04
+    steps:
+      - name: "Check out repository"
+        uses: actions/checkout@v3
+
+      - name: "Log in to Docker Registry"
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ${DOCKER_REGISTRY} -u ${{ github.actor }} --password-stdin
+
+      - name: "Build the Docker builder image"
+        run: |
+          docker pull ${DOCKER_NAME}-builder:latest || echo "No previous builder image found"
+          docker pull ${DOCKER_NAME}-jdk-matrix-builder:latest || echo "No previous test matrix builder image found"
+          docker build \
+            --cache-from=${DOCKER_NAME}-jdk-matrix-builder:latest \
+            --target builder \
+            -t ${DOCKER_NAME}-jdk-matrix-builder:latest \
+            .
+          docker push ${DOCKER_NAME}-jdk-matrix-builder:latest
+
+  test:
+    name: "Build ${{ matrix.testimage }}"
+    runs-on: ubuntu-22.04
+    needs: build
+    strategy:
+      matrix:
+        test-image:
+          - eclipse-temurin:17
+          - eclipse-temurin:17-alpine
+          - amazoncorretto:17
+      fail-fast: false
+    steps:
+      - name: "Check out repository"
+        uses: actions/checkout@v3
+
+      - name: "Log in to Docker Registry"
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ${DOCKER_REGISTRY} -u ${{ github.actor }} --password-stdin
+
+      - name: "Build the Docker test image"
+        run: |
+          docker pull ${DOCKER_NAME}-jdk-matrix-builder:latest || echo "No test matrix builder image found"
+          docker build \
+            --cache-from=${DOCKER_NAME}-jdk-matrix-builder:latest \
+            --build-arg TEST_IMAGE=${{ matrix.test-image }} \
+            --target test \
+            .

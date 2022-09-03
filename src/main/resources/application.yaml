@@ -1,0 +1,25 @@
+shelly:
+  auth:
+    username: admin
+    password: ''
+  devices:
+    discovery-interval: PT5M
+    connect-timeout: PT0.3S
+    request-timeout: PT0.3S
+    hosts: [ ]
+
+management:
+  endpoints:
+    web:
+      base-path: /
+      path-mapping:
+        prometheus: prometheus
+      exposure:
+        include:
+          - prometheus
+
+  metrics:
+    use-global-registry: false
+    export:
+      prometheus:
+        step: PT1M
