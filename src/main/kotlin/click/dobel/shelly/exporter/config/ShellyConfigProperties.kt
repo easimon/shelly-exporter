@@ -21,10 +21,10 @@ data class ShellyConfigProperties(
 
   data class Devices(
     val discoveryInterval: Duration = 5.minutes.toJavaDuration(),
-    val connectTimeout: Duration = 200.milliseconds.toJavaDuration(),
-    val requestTimeout: Duration = 200.milliseconds.toJavaDuration(),
+    val connectTimeout: Duration = 300.milliseconds.toJavaDuration(),
+    val requestTimeout: Duration = 300.milliseconds.toJavaDuration(),
     val hosts: List<String> = emptyList(),
   )
 
-  val hasAuth get() = !auth.username.isNullOrBlank() || !auth.password.isNullOrBlank()
+  val hasAuth get() = auth.username.isNotBlank() || auth.password.isNotBlank()
 }
