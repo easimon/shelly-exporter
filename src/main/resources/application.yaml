@@ -1,6 +1,6 @@
 shelly:
   auth:
-    username: admin
+    username: ''
     password: ''
   devices:
     discovery-interval: PT5M
