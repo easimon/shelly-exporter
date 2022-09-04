@@ -7,9 +7,7 @@ env:
   # Failing builds (QEMU failure?):
   #  - linux/ppc64le
   #  - linux/s390x
-  # Failing builds: java.lang.SecurityException: Couldn't iterate through the jurisdiction policy files: unlimited
-  #  - linux/arm/v7
-  PLATFORMS: linux/amd64,linux/arm64/v8
+  PLATFORMS: linux/amd64,linux/arm64/v8,linux/arm/v7
 
 jobs:
   build:

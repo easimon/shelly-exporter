@@ -1,5 +1,5 @@
-ARG BUILD_IMAGE=eclipse-temurin:17
-ARG TEST_IMAGE=eclipse-temurin:17
+ARG BUILD_IMAGE=eclipse-temurin:11
+ARG TEST_IMAGE=eclipse-temurin:11
 ARG RUNTIME_IMAGE=eclipse-temurin:17-jre
 ARG MAVEN_OPTS="-Xmx2000m"
 

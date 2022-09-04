@@ -38,9 +38,16 @@ jobs:
     strategy:
       matrix:
         test-image:
+          - eclipse-temurin:11
+          - eclipse-temurin:11-alpine
           - eclipse-temurin:17
           - eclipse-temurin:17-alpine
+          - amazoncorretto:11
           - amazoncorretto:17
+        platform:
+          - linux/amd64
+          - linux/arm64/v8
+          - linux/arm/v7
       fail-fast: false
     steps:
       - name: "Check out repository"
@@ -56,5 +63,6 @@ jobs:
           docker build \
             --cache-from=${DOCKER_NAME}-jdk-matrix-builder:latest \
             --build-arg TEST_IMAGE=${{ matrix.test-image }} \
+            --platform ${{ matrix.platform }} \
             --target test \
             .
