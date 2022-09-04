@@ -54,13 +54,13 @@ class ShellyMetrics(
       val tags = deviceTags(device)
 
       gauge("power.max", "watts", tags) { settings(address).maxPower }
-      boolGauge("cloud.enabled", null, tags) { settings(address).cloud.enabled }
-      boolGauge("cloud.connected", null, tags) { settings(address).cloud.connected }
+      boolGauge("cloud.enabled", tags) { settings(address).cloud.enabled }
+      boolGauge("cloud.connected", tags) { settings(address).cloud.connected }
 
       gauge("temperature", "degrees.celsius", tags) { status(address).temperature?.celsius }
       gauge("temperature", "degrees.fahrenheit", tags) { status(address).temperature?.fahrenheit }
-      boolGauge("temperature.valid", null, tags) { status(address).temperature?.isValid }
-      boolGauge("temperature.overheated", null, tags) { status(address).overTemperature }
+      boolGauge("temperature.valid", tags) { status(address).temperature?.isValid }
+      boolGauge("temperature.overheated", tags) { status(address).overTemperature }
 
       counter("uptime", "seconds", tags) { status(address).uptime }
       gauge("filesystem.free", "bytes", tags) { status(address).fileSystemFree }
@@ -78,7 +78,7 @@ class ShellyMetrics(
         counter("meter.power", "watthours", meterTags) { status(address).meters[index].total }
         gauge("meter.power.current", "watts", meterTags) { status(address).meters[index].power }
         gauge("meter.overpower", "watts", meterTags) { status(address).meters[index].overpower }
-        boolGauge("meter.value.valid", null, meterTags) { status(address).meters[index].isValid }
+        boolGauge("meter.value.valid", meterTags) { status(address).meters[index].isValid }
       }
 
       val outputCount = catchingWithDefault(0) {
@@ -87,9 +87,9 @@ class ShellyMetrics(
       for (index in 0 until outputCount) {
         val relayTags = tags.and(Tag.of(TAGNAME_CHANNEL, index.toString()))
 
-        boolGauge("relay.on", null, relayTags) { status(address).relays[index].isOn }
-        boolGauge("relay.overpower", null, relayTags) { status(address).relays[index].overpower }
-        boolGauge("relay.has-timer", null, relayTags) { status(address).relays[index].hasTimer }
+        boolGauge("relay.on", relayTags) { status(address).relays[index].isOn }
+        boolGauge("relay.overpower", relayTags) { status(address).relays[index].overpower }
+        boolGauge("relay.has-timer", relayTags) { status(address).relays[index].hasTimer }
         gauge("relay.timer-started", "seconds", relayTags) { status(address).relays[index].timerStarted }
         gauge("relay.timer-duration", "seconds", relayTags) { status(address).relays[index].timerDuration }
         gauge("relay.timer-remaining", "seconds", relayTags) { status(address).relays[index].timerRemaining }
@@ -133,11 +133,10 @@ class ShellyMetrics(
 
   private inline fun ShellyDevice.boolGauge(
     name: String,
-    baseUnit: String?,
     tags: Tags,
     crossinline func: ShellyClient.() -> Boolean?
   ) {
-    gauge(name, baseUnit, tags) { func().toDouble() }
+    gauge(name, null, tags) { func().toDouble() }
   }
 
   private fun Number?.nullToNaN(): Double = this?.toDouble() ?: Double.NaN
