@@ -15,13 +15,13 @@ class ShellyClient(
   restTemplateBuilder: RestTemplateBuilder
 ) {
 
-  @Cacheable("Status")
+  @Cacheable("Status", sync = true)
   fun status(address: String) = get<Status>(address, "status")
 
-  @Cacheable("Shelly")
+  @Cacheable("Shelly", sync = true)
   fun shelly(address: String) = get<Shelly>(address, "shelly")
 
-  @Cacheable("Settings")
+  @Cacheable("Settings", sync = true)
   fun settings(address: String) = get<Settings>(address, "settings")
 
   private inline fun <reified T : Any> get(
