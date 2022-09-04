@@ -34,7 +34,8 @@ class ShellyMetrics(
   private fun unregister(device: ShellyDevice) {
     LOG.info("Unregistering {}.", device)
     val tags = deviceTags(device).toList()
-    val toRemove = meterRegistry.meters
+
+    meterRegistry.meters
       .filter { it.id.tags.withoutChannel() == tags }
       .map { it.id }
       .forEach {
