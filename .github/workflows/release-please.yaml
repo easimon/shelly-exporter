@@ -6,15 +6,17 @@ on:
 
 jobs:
   release-please:
+    name: "Release Please"
     runs-on: ubuntu-22.04
     outputs:
       release-created: ${{ steps.release.outputs.release_created }}
-      ref: v${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }}.${{ steps.release.outputs.patch }}
+      ref: ${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }}.${{ steps.release.outputs.patch }}
     steps:
       - uses: GoogleCloudPlatform/release-please-action@v3.2.10
         id: release
         with:
           package-name: shelly-exporter
+          include-v-in-tag: false
           release-type: simple
           extra-files: |
             README.md
