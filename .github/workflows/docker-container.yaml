@@ -1,5 +1,9 @@
 name: Docker container build
-on: push
+
+on:
+  push:
+  workflow_dispatch:
+  workflow_call:
 
 env:
   DOCKER_REGISTRY: ghcr.io
