@@ -62,6 +62,7 @@ class ShellyMetrics(
       boolGauge("temperature.valid", tags) { status(address).temperature?.isValid }
       boolGauge("temperature.overheated", tags) { status(address).overTemperature }
 
+      boolGauge("update.available", tags) { status(address).update.hasUpdate }
       counter("uptime", "seconds", tags) { status(address).uptime }
       gauge("filesystem.free", "bytes", tags) { status(address).fileSystemFree }
       gauge("filesystem.size", "bytes", tags) { status(address).fileSystemSize }

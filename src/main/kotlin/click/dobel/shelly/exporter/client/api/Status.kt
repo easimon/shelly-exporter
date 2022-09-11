@@ -23,6 +23,9 @@ data class Status(
   @JsonProperty("uptime")
   val uptime: Long,
 
+  @JsonProperty("update")
+  val update: Update,
+
   // Following properties available on Plug S only
   // val temperature: Double?,
   @JsonProperty("overtemperature")
@@ -70,5 +73,12 @@ data class Status(
     val fahrenheit: Double,
     @JsonProperty("is_valid")
     val isValid: Boolean
+  )
+
+  data class Update(
+    @JsonProperty("status")
+    val status: String,
+    @JsonProperty("has_update")
+    val hasUpdate: Boolean,
   )
 }
