@@ -1,0 +1,21 @@
+---
+name: Release Please
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release-please:
+    runs-on: ubuntu-22.04
+    outputs:
+      release_created: ${{ steps.release.outputs.release_created }}
+    steps:
+      - uses: GoogleCloudPlatform/release-please-action@v3.2.10
+        id: release
+        with:
+          package-name: shelly-exporter
+          release-type: simple
+          extra-files: |
+            README.md
+            pom.xml
