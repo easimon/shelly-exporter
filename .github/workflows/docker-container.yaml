@@ -1,9 +1,12 @@
 name: Docker container build
 
 on:
-  push:
-  workflow_dispatch:
   workflow_call:
+    inputs:
+      ref:
+        description: 'Git-Ref Name to build'
+        required: true
+        type: string
 
 env:
   DOCKER_REGISTRY: ghcr.io
@@ -17,14 +20,21 @@ jobs:
     steps:
       - name: "Check out repository"
         uses: actions/checkout@v3
+        with:
+          ref: ${{ inputs.ref }}
 
       - name: "Use branch or tag name as Docker tag"
+        if: inputs.ref != 'main'
         run: |
           echo "Using normalized branch name as docker tag"
-          echo "DOCKER_TAG=$(echo ${{ github.ref_name }} | tr '[:upper:]' '[:lower:]' | tr -cs '[:alnum:]' '-' | sed 's/^-*//' | sed 's/-*$//')" >> "${GITHUB_ENV}"
+          echo "DOCKER_TAG=$(echo ${{ inputs.ref }} \
+            | tr '[:upper:]' '[:lower:]' \
+            | tr -cs '[:alnum:]' '-' \
+            | sed 's/^-*//' | sed 's/-*$//')" \
+            >> "${GITHUB_ENV}"
 
       - name: "Main Branch: Use 'latest' as Docker tag"
-        if: github.ref_name == 'main'
+        if: inputs.ref == 'main'
         run: |
           echo "Using latest as docker tag"
           echo "DOCKER_TAG=latest" >> "${GITHUB_ENV}"
