@@ -150,11 +150,11 @@ class ShellyMetrics(
 
   private fun deviceTags(device: ShellyDevice): Tags {
     return Tags.of(
-      Tag.of("name", device.name),
-      Tag.of("address", device.address),
-      Tag.of("mac", device.mac),
-      Tag.of("type", device.type),
-      Tag.of("firmwareVersion", device.firmwareVersion),
+      Tag.of("name", device.name.trim()),
+      Tag.of("address", device.address.trim()),
+      Tag.of("mac", device.mac.trim()),
+      Tag.of("type", device.type.trim()),
+      Tag.of("firmwareVersion", device.firmwareVersion.trim()),
     )
   }
 
