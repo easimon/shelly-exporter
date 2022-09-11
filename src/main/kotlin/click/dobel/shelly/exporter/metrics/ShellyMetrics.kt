@@ -76,7 +76,7 @@ class ShellyMetrics(
       for (index in 0 until meterCount) {
         val meterTags = tags.and(Tag.of(TAGNAME_CHANNEL, index.toString()))
 
-        counter("meter.power", "watthours", meterTags) { status(address).meters[index].total }
+        counter("meter.power", "watthours", meterTags) { status(address).meters[index].total / 60.0 }
         gauge("meter.power.current", "watts", meterTags) { status(address).meters[index].power }
         gauge("meter.overpower", "watts", meterTags) { status(address).meters[index].overpower }
         boolGauge("meter.value.valid", meterTags) { status(address).meters[index].isValid }
