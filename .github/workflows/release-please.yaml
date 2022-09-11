@@ -19,3 +19,9 @@ jobs:
           extra-files: |
             README.md
             pom.xml
+
+  trigger-tagged-build:
+    needs:
+      - release-please
+    if: ${{ needs.release-please.outputs.release_created }}
+    uses: ${{ github.repository }}/.github/workflows/docker-container.yaml@v${{ needs.release-please.outputs.major }}.${{ needs.release-please.outputs.minor }}.${{ needs.release-please.outputs.patch }}
