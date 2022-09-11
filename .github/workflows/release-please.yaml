@@ -1,5 +1,4 @@
----
-name: Release Please
+name: Release
 on:
   push:
     branches:
@@ -9,7 +8,8 @@ jobs:
   release-please:
     runs-on: ubuntu-22.04
     outputs:
-      release_created: ${{ steps.release.outputs.release_created }}
+      release-created: ${{ steps.release.outputs.release_created }}
+      ref: v${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }}.${{ steps.release.outputs.patch }}
     steps:
       - uses: GoogleCloudPlatform/release-please-action@v3.2.10
         id: release
@@ -20,8 +20,11 @@ jobs:
             README.md
             pom.xml
 
-  trigger-tagged-build:
+  trigger-build:
+    name: "Trigger build"
     needs:
       - release-please
-    if: ${{ needs.release-please.outputs.release_created }}
-    uses: ${{ github.repository }}/.github/workflows/docker-container.yaml@v${{ needs.release-please.outputs.major }}.${{ needs.release-please.outputs.minor }}.${{ needs.release-please.outputs.patch }}
+    if: ${{ needs.release-please.outputs.release-created }}
+    uses: ./.github/workflows/docker-container.yaml
+    with:
+      ref: ${{ needs.release-please.outputs.ref }}
