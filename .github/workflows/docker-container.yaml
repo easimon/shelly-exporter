@@ -16,8 +16,8 @@ jobs:
 
       - name: "Use branch or tag name as Docker tag"
         run: |
-          echo "Using branch name as docker tag"
-          echo "DOCKER_TAG=$(echo ${{ github.ref_name }})" >> "${GITHUB_ENV}"
+          echo "Using normalized branch name as docker tag"
+          echo "DOCKER_TAG=$(echo ${{ github.ref_name }} | tr '[:upper:]' '[:lower:]' | tr -cs '[:alnum:]' '-' | sed 's/^-*//' | sed 's/-*$//')" >> "${GITHUB_ENV}"
 
       - name: "Main Branch: Use 'latest' as Docker tag"
         if: github.ref_name == 'main'
