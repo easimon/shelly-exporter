@@ -71,7 +71,7 @@ class ShellyMetrics(
       gauge("memory.low-water-mark", "bytes", tags) { status(address).ramLowWaterMark }
 
       val meterCount = catchingWithDefault(0) {
-        shellyClient.settings(address).device.meterCount
+        shellyClient.status(address).meters.size
       }
       for (index in 0 until meterCount) {
         val meterTags = tags.and(Tag.of(TAGNAME_CHANNEL, index.toString()))
@@ -83,7 +83,7 @@ class ShellyMetrics(
       }
 
       val outputCount = catchingWithDefault(0) {
-        shellyClient.settings(address).device.outputCount
+        shellyClient.status(address).relays.size
       }
       for (index in 0 until outputCount) {
         val relayTags = tags.and(Tag.of(TAGNAME_CHANNEL, index.toString()))
