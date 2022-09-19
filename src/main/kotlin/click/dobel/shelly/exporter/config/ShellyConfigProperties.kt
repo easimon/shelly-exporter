@@ -11,7 +11,8 @@ import kotlin.time.toJavaDuration
 @ConfigurationProperties(prefix = "shelly")
 data class ShellyConfigProperties(
   val auth: Auth,
-  val devices: Devices
+  val devices: Devices,
+  val metrics: Metrics,
 ) {
 
   data class Auth(
@@ -24,6 +25,10 @@ data class ShellyConfigProperties(
     val connectTimeout: Duration = 300.milliseconds.toJavaDuration(),
     val requestTimeout: Duration = 300.milliseconds.toJavaDuration(),
     val hosts: List<String> = emptyList(),
+  )
+
+  data class Metrics(
+    val failureValue: Double = 0.0
   )
 
   val hasAuth get() = auth.username.isNotBlank() || auth.password.isNotBlank()
