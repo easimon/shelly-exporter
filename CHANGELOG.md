@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.1](https://github.com/easimon/shelly-exporter/compare/1.0.0...1.0.1) (2022-09-19)
+
+
+### Bug Fixes
+
+* make scraping error result value configurable, default to 0.0 ([830170d](https://github.com/easimon/shelly-exporter/commit/830170d0ecfea0d9cdc449bfbdcafd786d3e41a9))
+* trim device name in registry as well ([c307bd2](https://github.com/easimon/shelly-exporter/commit/c307bd284fd50dac254bed0243728a67c5936317))
+
 ## [1.0.0](https://github.com/easimon/shelly-exporter/compare/v1.0.1...1.0.0) (2022-09-11)
 
 
