@@ -36,7 +36,7 @@ class ShellyDeviceRegistry(
         ShellyDevice(
           mac = device.mac,
           address = address,
-          name = name,
+          name = name.trim(),
           type = device.type,
           firmwareVersion = firmwareVersion,
         )
