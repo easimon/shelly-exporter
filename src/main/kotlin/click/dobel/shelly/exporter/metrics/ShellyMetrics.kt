@@ -1,6 +1,7 @@
 package click.dobel.shelly.exporter.metrics
 
 import click.dobel.shelly.exporter.client.ShellyClient
+import click.dobel.shelly.exporter.config.ShellyConfigProperties
 import click.dobel.shelly.exporter.discovery.ShellyDevice
 import click.dobel.shelly.exporter.logging.logger
 import io.micrometer.core.instrument.FunctionCounter
@@ -13,7 +14,8 @@ import org.springframework.stereotype.Component
 @Component
 class ShellyMetrics(
   val shellyClient: ShellyClient,
-  val meterRegistry: MeterRegistry
+  val meterRegistry: MeterRegistry,
+  configProperties: ShellyConfigProperties,
 ) {
 
   companion object {
@@ -22,6 +24,8 @@ class ShellyMetrics(
 
     const val TAGNAME_CHANNEL = "channel"
   }
+
+  private val failureValue: Double = configProperties.metrics.failureValue
 
   fun register(devices: Collection<ShellyDevice>) {
     devices.forEach(::register)
@@ -56,6 +60,9 @@ class ShellyMetrics(
       gauge("power.max", "watts", tags) { settings(address).maxPower }
       boolGauge("cloud.enabled", tags) { settings(address).cloud.enabled }
       boolGauge("cloud.connected", tags) { settings(address).cloud.connected }
+
+      gauge("location.latitude", "degrees", tags) { settings(address).lat }
+      gauge("location.longitude", "degrees", tags) { settings(address).lng }
 
       gauge("temperature", "degrees.celsius", tags) { status(address).temperature?.celsius }
       gauge("temperature", "degrees.fahrenheit", tags) { status(address).temperature?.fahrenheit }
@@ -107,7 +114,7 @@ class ShellyMetrics(
     LOG.debug(
       "Registered meter [{}]",
       FunctionCounter
-        .builder(pre(name), this) { shellyClient.runCatching { func() }.getOrNull().nullToNaN() }
+        .builder(pre(name), this) { shellyClient.runCatching { func() }.getOrNull().orDefault() }
         .baseUnit(baseUnit)
         .tags(tags)
         .register(meterRegistry).id
@@ -123,7 +130,7 @@ class ShellyMetrics(
     LOG.debug(
       "Registered meter [{}]",
       Gauge
-        .builder(pre(name), this) { shellyClient.runCatching { func() }.getOrNull().nullToNaN() }
+        .builder(pre(name), this) { shellyClient.runCatching { func() }.getOrNull().orDefault() }
         .baseUnit(baseUnit)
         .tags(tags)
         .register(meterRegistry).id
@@ -140,12 +147,12 @@ class ShellyMetrics(
     gauge(name, null, tags) { func().toDouble() }
   }
 
-  private fun Number?.nullToNaN(): Double = this?.toDouble() ?: Double.NaN
+  private fun Number?.orDefault(): Double = this?.toDouble() ?: failureValue
 
   private fun Boolean?.toDouble(): Double = when (this) {
     true -> 1.0
     false -> 0.0
-    else -> Double.NaN
+    else -> failureValue
   }
 
   private fun deviceTags(device: ShellyDevice): Tags {
