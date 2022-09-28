@@ -32,7 +32,7 @@ class ShellyDeviceRegistry(
 
   fun addressToDevice(address: String): ShellyDevice? {
     return shellyClient.runCatching {
-      settings(address).run {
+      settings(address)!!.run {
         ShellyDevice(
           mac = device.mac,
           address = address,
