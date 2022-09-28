@@ -28,7 +28,7 @@ data class ShellyConfigProperties(
   )
 
   data class Metrics(
-    val failureValue: Double = 0.0
+    val failureValue: Double = Double.NaN
   )
 
   val hasAuth get() = auth.username.isNotBlank() || auth.password.isNotBlank()

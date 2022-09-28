@@ -4,11 +4,11 @@ shelly:
     password: ''
   devices:
     discovery-interval: PT5M
-    connect-timeout: PT0.3S
-    request-timeout: PT0.3S
+    connect-timeout: PT0.5S
+    request-timeout: PT0.5S
     hosts: [ ]
   metrics:
-    failure-value: 0.0
+    failure-value: NaN
 
 management:
   endpoints:
