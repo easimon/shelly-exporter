@@ -57,50 +57,52 @@ class ShellyMetrics(
     with(device) {
       val tags = deviceTags(device)
 
-      gauge("power.max", "watts", tags) { settings(address).maxPower }
-      boolGauge("cloud.enabled", tags) { settings(address).cloud.enabled }
-      boolGauge("cloud.connected", tags) { settings(address).cloud.connected }
+      gauge("power.max", "watts", tags) { settings(address)?.maxPower }
+      boolGauge("cloud.enabled", tags) { settings(address)?.cloud?.enabled }
+      boolGauge("cloud.connected", tags) { settings(address)?.cloud?.connected }
 
-      gauge("location.latitude", "degrees", tags) { settings(address).lat }
-      gauge("location.longitude", "degrees", tags) { settings(address).lng }
+      gauge("location.latitude", "degrees", tags) { settings(address)?.lat }
+      gauge("location.longitude", "degrees", tags) { settings(address)?.lng }
 
-      gauge("temperature", "degrees.celsius", tags) { status(address).temperature?.celsius }
-      gauge("temperature", "degrees.fahrenheit", tags) { status(address).temperature?.fahrenheit }
-      boolGauge("temperature.valid", tags) { status(address).temperature?.isValid }
-      boolGauge("temperature.overheated", tags) { status(address).overTemperature }
+      gauge("temperature", "degrees.celsius", tags) { status(address)?.temperature?.celsius }
+      gauge("temperature", "degrees.fahrenheit", tags) { status(address)?.temperature?.fahrenheit }
+      boolGauge("temperature.valid", tags) { status(address)?.temperature?.isValid }
+      boolGauge("temperature.overheated", tags) { status(address)?.overTemperature }
 
-      boolGauge("update.available", tags) { status(address).update.hasUpdate }
-      counter("uptime", "seconds", tags) { status(address).uptime }
-      gauge("filesystem.free", "bytes", tags) { status(address).fileSystemFree }
-      gauge("filesystem.size", "bytes", tags) { status(address).fileSystemSize }
-      gauge("memory.free", "bytes", tags) { status(address).ramFree }
-      gauge("memory.size", "bytes", tags) { status(address).ramTotal }
-      gauge("memory.low-water-mark", "bytes", tags) { status(address).ramLowWaterMark }
+      boolGauge("update.available", tags) { status(address)?.update?.hasUpdate }
+      counter("uptime", "seconds", tags) { status(address)?.uptime }
+      gauge("filesystem.free", "bytes", tags) { status(address)?.fileSystemFree }
+      gauge("filesystem.size", "bytes", tags) { status(address)?.fileSystemSize }
+      gauge("memory.free", "bytes", tags) { status(address)?.ramFree }
+      gauge("memory.size", "bytes", tags) { status(address)?.ramTotal }
+      gauge("memory.low-water-mark", "bytes", tags) { status(address)?.ramLowWaterMark }
 
       val meterCount = catchingWithDefault(0) {
-        shellyClient.status(address).meters.size
+        shellyClient.status(address)?.meters?.size
       }
       for (index in 0 until meterCount) {
         val meterTags = tags.and(Tag.of(TAGNAME_CHANNEL, index.toString()))
 
-        counter("meter.power", "watthours", meterTags) { status(address).meters[index].total / 60.0 }
-        gauge("meter.power.current", "watts", meterTags) { status(address).meters[index].power }
-        gauge("meter.overpower", "watts", meterTags) { status(address).meters[index].overpower }
-        boolGauge("meter.value.valid", meterTags) { status(address).meters[index].isValid }
+        counter("meter.power", "watthours", meterTags) {
+          (status(address)?.meters?.get(index)?.total ?: Double.NaN) / 60.0
+        }
+        gauge("meter.power.current", "watts", meterTags) { status(address)?.meters?.get(index)?.power }
+        gauge("meter.overpower", "watts", meterTags) { status(address)?.meters?.get(index)?.overpower }
+        boolGauge("meter.value.valid", meterTags) { status(address)?.meters?.get(index)?.isValid }
       }
 
       val outputCount = catchingWithDefault(0) {
-        shellyClient.status(address).relays.size
+        shellyClient.status(address)?.relays?.size
       }
       for (index in 0 until outputCount) {
         val relayTags = tags.and(Tag.of(TAGNAME_CHANNEL, index.toString()))
 
-        boolGauge("relay.on", relayTags) { status(address).relays[index].isOn }
-        boolGauge("relay.overpower", relayTags) { status(address).relays[index].overpower }
-        boolGauge("relay.has-timer", relayTags) { status(address).relays[index].hasTimer }
-        gauge("relay.timer-started", "seconds", relayTags) { status(address).relays[index].timerStarted }
-        gauge("relay.timer-duration", "seconds", relayTags) { status(address).relays[index].timerDuration }
-        gauge("relay.timer-remaining", "seconds", relayTags) { status(address).relays[index].timerRemaining }
+        boolGauge("relay.on", relayTags) { status(address)?.relays?.get(index)?.isOn }
+        boolGauge("relay.overpower", relayTags) { status(address)?.relays?.get(index)?.overpower }
+        boolGauge("relay.has-timer", relayTags) { status(address)?.relays?.get(index)?.hasTimer }
+        gauge("relay.timer-started", "seconds", relayTags) { status(address)?.relays?.get(index)?.timerStarted }
+        gauge("relay.timer-duration", "seconds", relayTags) { status(address)?.relays?.get(index)?.timerDuration }
+        gauge("relay.timer-remaining", "seconds", relayTags) { status(address)?.relays?.get(index)?.timerRemaining }
       }
     }
   }
@@ -173,7 +175,7 @@ class ShellyMetrics(
     }
   }
 
-  private inline fun <R> catchingWithDefault(default: R, block: () -> R): R {
-    return catching(block).getOrDefault(default)
+  private inline fun <AR : Any, R : AR?> catchingWithDefault(default: AR, block: () -> R): AR {
+    return catching(block).getOrNull() ?: default
   }
 }

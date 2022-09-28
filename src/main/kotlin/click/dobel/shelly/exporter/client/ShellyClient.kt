@@ -27,8 +27,12 @@ class ShellyClient(
   private inline fun <reified T : Any> get(
     address: String,
     path: String
-  ): T {
-    return restTemplate.getForObject(url(address, path))
+  ): T? {
+    return try {
+      restTemplate.getForObject(url(address, path))
+    } catch (ex: Exception) {
+      null
+    }
   }
 
   private fun url(
