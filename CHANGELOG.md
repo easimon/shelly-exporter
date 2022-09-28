@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.2](https://github.com/easimon/shelly-exporter/compare/1.0.1...1.0.2) (2022-09-28)
+
+
+### Bug Fixes
+
+* http client: make scraping errors cacheable as well (by returning null instead of throwing) ([9bdea6b](https://github.com/easimon/shelly-exporter/commit/9bdea6ba0a0a01f316661a1533a9e951a63772cb))
+* revert emitting 0 on scraping failure, emit NaN instead. ([ec0044d](https://github.com/easimon/shelly-exporter/commit/ec0044d96ea307f98e98646e2cda0d5bf7db10df))
+
 ## [1.0.1](https://github.com/easimon/shelly-exporter/compare/1.0.0...1.0.1) (2022-09-19)
 
 
