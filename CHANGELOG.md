@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/easimon/shelly-exporter/compare/1.0.2...1.1.0) (2022-10-16)
+
+
+### Features
+
+* add meter descriptions. ([1e9b3d6](https://github.com/easimon/shelly-exporter/commit/1e9b3d61c708525658dc56805521959264f57c21))
+
 ## [1.0.2](https://github.com/easimon/shelly-exporter/compare/1.0.1...1.0.2) (2022-09-28)
 
 
