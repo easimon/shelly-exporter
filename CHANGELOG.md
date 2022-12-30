@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.0.0](https://github.com/easimon/shelly-exporter/compare/1.1.0...2.0.0) (2022-12-30)
+
+
+### ⚠ BREAKING CHANGES
+
+* upgrade to spring boot 3
+
+### Features
+
+* upgrade to spring boot 3 ([4118aa2](https://github.com/easimon/shelly-exporter/commit/4118aa2d9c8dd693396f34060affa2ecf9802b4d))
+
 ## [1.1.0](https://github.com/easimon/shelly-exporter/compare/1.0.2...1.1.0) (2022-10-16)
 
 
