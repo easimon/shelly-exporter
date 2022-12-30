@@ -1,13 +1,11 @@
 package click.dobel.shelly.exporter.config
 
 import org.springframework.boot.context.properties.ConfigurationProperties
-import org.springframework.boot.context.properties.ConstructorBinding
 import java.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.minutes
 import kotlin.time.toJavaDuration
 
-@ConstructorBinding
 @ConfigurationProperties(prefix = "shelly")
 data class ShellyConfigProperties(
   val auth: Auth,
