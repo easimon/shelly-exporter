@@ -3,12 +3,12 @@ package click.dobel.shelly.exporter.metrics
 import click.dobel.shelly.exporter.client.ShellyClient
 import click.dobel.shelly.exporter.config.ShellyConfigProperties
 import click.dobel.shelly.exporter.discovery.ShellyDevice
-import click.dobel.shelly.exporter.logging.logger
 import io.micrometer.core.instrument.FunctionCounter
 import io.micrometer.core.instrument.Gauge
 import io.micrometer.core.instrument.MeterRegistry
 import io.micrometer.core.instrument.Tag
 import io.micrometer.core.instrument.Tags
+import mu.KLogging
 import org.springframework.stereotype.Component
 
 @Component
@@ -18,10 +18,8 @@ class ShellyMetrics(
   configProperties: ShellyConfigProperties,
 ) {
 
-  companion object {
-    val LOG = logger()
+  companion object : KLogging() {
     const val PREFIX = "shelly."
-
     const val TAGNAME_CHANNEL = "channel"
   }
 
@@ -36,14 +34,14 @@ class ShellyMetrics(
   }
 
   private fun unregister(device: ShellyDevice) {
-    LOG.info("Unregistering {}.", device)
+    logger.info { "Unregistering ${device}." }
     val tags = deviceTags(device).toList()
 
     meterRegistry.meters
       .filter { it.id.tags.withoutChannel() == tags }
       .map { it.id }
       .forEach {
-        LOG.debug("Unregistering meter [{}]", it)
+        logger.debug { "Unregistering meter [${it}]" }
         meterRegistry.remove(it)
       }
   }
@@ -53,7 +51,7 @@ class ShellyMetrics(
   }
 
   private fun register(device: ShellyDevice) {
-    LOG.info("Registering {}.", device)
+    logger.info { "Registering ${device}." }
     with(device) {
       val tags = deviceTags(device)
 
@@ -233,15 +231,16 @@ class ShellyMetrics(
     tags: Tags,
     crossinline func: ShellyClient.() -> Number?
   ) {
-    LOG.debug(
-      "Registered meter [{}]",
-      FunctionCounter
-        .builder(pre(name), this) { shellyClient.runCatching { func() }.getOrNull().orDefault() }
-        .description(description)
-        .baseUnit(baseUnit)
-        .tags(tags)
-        .register(meterRegistry).id
-    )
+    val counterId = FunctionCounter
+      .builder(pre(name), this) { shellyClient.runCatching { func() }.getOrNull().orDefault() }
+      .description(description)
+      .baseUnit(baseUnit)
+      .tags(tags)
+      .register(meterRegistry).id
+
+    logger.debug {
+      "Registered meter [${counterId}]"
+    }
   }
 
   private inline fun ShellyDevice.gauge(
@@ -251,15 +250,14 @@ class ShellyMetrics(
     tags: Tags,
     crossinline func: ShellyClient.() -> Number?
   ) {
-    LOG.debug(
-      "Registered meter [{}]",
-      Gauge
-        .builder(pre(name), this) { shellyClient.runCatching { func() }.getOrNull().orDefault() }
-        .description(description)
-        .baseUnit(baseUnit)
-        .tags(tags)
-        .register(meterRegistry).id
-    )
+    val gaugeId = Gauge
+      .builder(pre(name), this) { shellyClient.runCatching { func() }.getOrNull().orDefault() }
+      .description(description)
+      .baseUnit(baseUnit)
+      .tags(tags)
+      .register(meterRegistry).id
+
+    logger.debug { "Registered meter [${gaugeId}]" }
   }
 
   private fun pre(s: String) = "$PREFIX$s"

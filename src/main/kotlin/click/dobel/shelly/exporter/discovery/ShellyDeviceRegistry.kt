@@ -2,8 +2,8 @@ package click.dobel.shelly.exporter.discovery
 
 import click.dobel.shelly.exporter.client.ShellyClient
 import click.dobel.shelly.exporter.config.ShellyConfigProperties
-import click.dobel.shelly.exporter.logging.logger
 import click.dobel.shelly.exporter.metrics.ShellyMetrics
+import mu.KLogging
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
@@ -16,9 +16,7 @@ class ShellyDeviceRegistry(
   private val metrics: ShellyMetrics,
   @Autowired(required = false) private val resolver: AddressResolver = DefaultAddressResolver
 ) {
-  companion object {
-    val LOG = logger()
-  }
+  companion object : KLogging()
 
   val devices: MutableSet<ShellyDevice> = mutableSetOf()
 
@@ -42,7 +40,7 @@ class ShellyDeviceRegistry(
         )
       }
     }.onFailure { ex ->
-      LOG.warn("Could not discover device at [{}]; {}", address, ex.message)
+      logger.warn { "Could not discover device at [${address}]; ${ex.message}" }
     }.getOrNull()
   }
 
@@ -54,7 +52,7 @@ class ShellyDeviceRegistry(
 
   @Scheduled(fixedRateString = "\${shelly.devices.discovery-interval:PT1M}")
   fun updateAddresses() {
-    LOG.info("Updating device addresses.")
+    logger.info("Updating device addresses.")
     val discovered = discoverDevices()
 
     val addedDevices: Set<ShellyDevice>
@@ -68,12 +66,11 @@ class ShellyDeviceRegistry(
       removedDevices.forEach(devices::remove)
     }
 
-    LOG.info(
-      "Added {}, removed {}, current amount: {} devices.",
-      addedDevices.size,
-      removedDevices.size,
-      devices.size
-    )
+    logger.info {
+      "Added ${addedDevices.size}, " +
+        "removed ${removedDevices.size}, " +
+        "current amount: ${devices.size} devices."
+    }
     metrics.unregister(removedDevices)
     metrics.register(addedDevices)
   }

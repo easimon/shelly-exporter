@@ -20,6 +20,7 @@
     <kotlin.version>1.8.10</kotlin.version>
     <kotest.version>5.5.5</kotest.version>
     <kotest-spring.version>1.1.2</kotest-spring.version>
+    <kotlin.logging.version>3.0.4</kotlin.logging.version>
 
     <go-offline-maven-plugin.version>1.2.8</go-offline-maven-plugin.version>
   </properties>
@@ -59,6 +60,12 @@
     </dependency>
 
     <dependency>
+      <groupId>io.github.microutils</groupId>
+      <artifactId>kotlin-logging-jvm</artifactId>
+      <version>${kotlin.logging.version}</version>
+    </dependency>
+
+    <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
@@ -95,6 +102,7 @@
       <plugin>
         <groupId>org.jetbrains.kotlin</groupId>
         <artifactId>kotlin-maven-plugin</artifactId>
+        <version>${kotlin.version}</version>
         <configuration>
           <args>
             <arg>-Xjsr305=strict</arg>
