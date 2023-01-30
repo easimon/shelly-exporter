@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.0](https://github.com/easimon/shelly-exporter/compare/2.0.0...2.1.0) (2023-01-30)
+
+
+### Features
+
+* add base url redirect ([202d67e](https://github.com/easimon/shelly-exporter/commit/202d67ead6ee75fb59410d80b864640205d660fa))
+
 ## [2.0.0](https://github.com/easimon/shelly-exporter/compare/1.1.0...2.0.0) (2022-12-30)
 
 
