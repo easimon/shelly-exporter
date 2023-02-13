@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.1](https://github.com/easimon/shelly-exporter/compare/2.2.0...2.2.1) (2023-02-13)
+
+
+### Bug Fixes
+
+* watt-minute meters must have different name ([97abedd](https://github.com/easimon/shelly-exporter/commit/97abedd2df2fcd72e7f8ba3fa4855eab7f77c689))
+
 ## [2.2.0](https://github.com/easimon/shelly-exporter/compare/2.1.0...2.2.0) (2023-02-13)
 
 
