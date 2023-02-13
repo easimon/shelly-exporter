@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.2.0](https://github.com/easimon/shelly-exporter/compare/2.1.0...2.2.0) (2023-02-13)
+
+
+### Features
+
+* expose power consumption in watt-minutes and watt-hours (calculated) ([86025a9](https://github.com/easimon/shelly-exporter/commit/86025a94a69c7d456ebd3ce9ef876b19d9ecf45d))
+
+
+### Bug Fixes
+
+* migrate deprecated spring boot property ([a001290](https://github.com/easimon/shelly-exporter/commit/a001290ca56ac8978dd2b2dadc1b429058676270))
+
 ## [2.1.0](https://github.com/easimon/shelly-exporter/compare/2.0.0...2.1.0) (2023-01-30)
 
 
