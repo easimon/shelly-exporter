@@ -163,7 +163,7 @@ class ShellyMetrics(
           meterTags
         ) { (status(address)?.meters?.get(index)?.wattHoursTotal ?: Double.NaN) }
         counter(
-          "meter.power",
+          "meter.power.native",
           "Total power consumption in watt-minutes.",
           "wattminutes",
           meterTags
