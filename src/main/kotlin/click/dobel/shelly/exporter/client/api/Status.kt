@@ -1,5 +1,6 @@
 package click.dobel.shelly.exporter.client.api
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonProperty
 
 data class Status(
@@ -62,9 +63,15 @@ data class Status(
     val timestamp: Long,
     @JsonProperty("counters")
     val counters: List<Double>,
+    /**
+     * total consumption in watt-minutes.
+     */
     @JsonProperty("total")
-    val total: Double,
-  )
+    val wattMinutesTotal: Double,
+  ) {
+    @get:JsonIgnore
+    val wattHoursTotal get() = wattMinutesTotal / 60.0
+  }
 
   data class Temperature(
     @JsonProperty("tC")

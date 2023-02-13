@@ -158,10 +158,16 @@ class ShellyMetrics(
 
         counter(
           "meter.power",
-          "Total power consumption in watthours.",
+          "Total power consumption in watt-hours.",
           "watthours",
           meterTags
-        ) { (status(address)?.meters?.get(index)?.total ?: Double.NaN) / 60.0 }
+        ) { (status(address)?.meters?.get(index)?.wattHoursTotal ?: Double.NaN) }
+        counter(
+          "meter.power",
+          "Total power consumption in watt-minutes.",
+          "wattminutes",
+          meterTags
+        ) { (status(address)?.meters?.get(index)?.wattMinutesTotal ?: Double.NaN) }
         gauge(
           "meter.power.current",
           "Momentary power consumption in watts.",
