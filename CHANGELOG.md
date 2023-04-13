@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.3.0](https://github.com/easimon/shelly-exporter/compare/2.2.1...2.3.0) (2023-04-13)
+
+
+### Features
+
+* do not emit metrics for unreachable devices ([e2a2992](https://github.com/easimon/shelly-exporter/commit/e2a29926c2724029065723c3736f1083aa25f890))
+
 ## [2.2.1](https://github.com/easimon/shelly-exporter/compare/2.2.0...2.2.1) (2023-02-13)
 
 
