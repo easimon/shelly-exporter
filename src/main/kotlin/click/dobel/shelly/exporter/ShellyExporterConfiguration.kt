@@ -5,10 +5,12 @@ import click.dobel.shelly.exporter.client.api.Shelly
 import click.dobel.shelly.exporter.client.api.Status
 import click.dobel.shelly.exporter.config.ShellyConfigProperties
 import click.dobel.shelly.exporter.metrics.ShellyMetrics
+import click.dobel.shelly.exporter.metrics.ValueFilteringCollectorRegistry
 import com.github.benmanes.caffeine.cache.Caffeine
 import io.micrometer.core.instrument.Meter
 import io.micrometer.core.instrument.config.MeterFilter
 import io.micrometer.core.instrument.config.MeterFilterReply
+import io.prometheus.client.CollectorRegistry
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.cache.CacheManager
 import org.springframework.cache.annotation.EnableCaching
@@ -63,5 +65,10 @@ class ShellyExporterConfiguration {
         }
       }
     }
+  }
+
+  @Bean
+  fun collectorRegistry(configProperties: ShellyConfigProperties): CollectorRegistry {
+    return ValueFilteringCollectorRegistry(configProperties.metrics.failureValue, true)
   }
 }
