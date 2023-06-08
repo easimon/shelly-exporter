@@ -12,5 +12,5 @@ data class Shelly(
   @JsonProperty("fw")
   val firmwareVersion: String,
   @JsonProperty("longid")
-  val longId: Boolean,
+  val hasLongId: Boolean,
 )

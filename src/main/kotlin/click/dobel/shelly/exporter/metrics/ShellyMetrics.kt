@@ -65,12 +65,41 @@ class ShellyMetrics(
         "cloud.enabled",
         "Whether Shelly cloud is enabled.",
         tags
-      ) { settings(address)?.cloud?.enabled }
+      ) { status(address)?.cloud?.isEnabled }
       boolGauge(
         "cloud.connected",
         "Whether Shelly cloud is connected.",
         tags
-      ) { settings(address)?.cloud?.connected }
+      ) { status(address)?.cloud?.isConnected }
+
+      boolGauge(
+        "wifi.connected",
+        "Whether Shelly is connected to WIFI.",
+        tags
+      ) { status(address)?.wifiSta?.isConnected }
+      gauge(
+        "wifi.rssi",
+        "Current Wifi Received Signal Strength Indication (RSSI).",
+        "dbmw",
+        tags
+      ) { status(address)?.wifiSta?.rssi }
+      boolGauge(
+        "wifi.roaming.enabled",
+        "Whether AP roaming is enabled.",
+        tags
+      ) { settings(address)?.apRoaming?.isEnabled }
+      gauge(
+        "wifi.roaming.threshold",
+        "RSSI signal strength value below which the device will periodically scan for better access point.",
+        "dbmw",
+        tags
+      ) { settings(address)?.apRoaming?.threshold }
+
+      boolGauge(
+        "mqtt.connected",
+        "Whether Shelly is connected to MQTT server.",
+        tags
+      ) { status(address)?.mqtt?.isConnected }
 
       gauge(
         "location.latitude",

@@ -10,20 +10,21 @@ data class Settings(
   @JsonProperty("lng")
   val lng: Double,
   @JsonProperty("led_status_disable")
-  val ledStatusDisable: Boolean,
+  val isStatusLedDisabled: Boolean,
   @JsonProperty("fw")
   val firmwareVersion: String,
 
   @JsonProperty("device")
   val device: Device,
-  @JsonProperty("cloud")
-  val cloud: Cloud,
+
+  @JsonProperty("ap_roaming")
+  val apRoaming: ApRoaming,
 
   // Shelly Plug only
   @JsonProperty("max_power")
   val maxPower: Double?,
   @JsonProperty("led_power_disable")
-  val ledPowerDisable: Boolean?,
+  val isPowerLedDisabled: Boolean?,
 ) {
 
   data class Device(
@@ -39,10 +40,10 @@ data class Settings(
     val meterCount: Int,
   )
 
-  data class Cloud(
+  data class ApRoaming(
     @JsonProperty("enabled")
-    val enabled: Boolean,
-    @JsonProperty("connected")
-    val connected: Boolean
+    val isEnabled: Boolean,
+    @JsonProperty("threshold")
+    val threshold: Int,
   )
 }

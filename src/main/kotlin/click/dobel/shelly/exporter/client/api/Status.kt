@@ -9,7 +9,6 @@ data class Status(
   @JsonProperty("meters")
   val meters: List<Meter>,
 
-
   @JsonProperty("ram_total")
   val ramTotal: Long,
   @JsonProperty("ram_free")
@@ -27,12 +26,21 @@ data class Status(
   @JsonProperty("update")
   val update: Update,
 
+  @JsonProperty("wifi_sta")
+  val wifiSta: WifiSta,
+
+  @JsonProperty("mqtt")
+  val mqtt: Mqtt,
+
+  @JsonProperty("cloud")
+  val cloud: Cloud,
+
   // Following properties available on Plug S only
   // val temperature: Double?,
   @JsonProperty("overtemperature")
   val overTemperature: Boolean?,
   @JsonProperty("tmp")
-  val temperature: Temperature?
+  val temperature: Temperature?,
 ) {
 
   data class Relay(
@@ -79,7 +87,7 @@ data class Status(
     @JsonProperty("tF")
     val fahrenheit: Double,
     @JsonProperty("is_valid")
-    val isValid: Boolean
+    val isValid: Boolean,
   )
 
   data class Update(
@@ -87,5 +95,28 @@ data class Status(
     val status: String,
     @JsonProperty("has_update")
     val hasUpdate: Boolean,
+  )
+
+  data class WifiSta(
+    @JsonProperty("connected")
+    val isConnected: Boolean,
+    @JsonProperty("ssid")
+    val ssid: String,
+    @JsonProperty("ip")
+    val ip: String,
+    @JsonProperty("rssi")
+    val rssi: Int,
+  )
+
+  data class Mqtt(
+    @JsonProperty("connected")
+    val isConnected: Boolean,
+  )
+
+  data class Cloud(
+    @JsonProperty("enabled")
+    val isEnabled: Boolean,
+    @JsonProperty("connected")
+    val isConnected: Boolean,
   )
 }
