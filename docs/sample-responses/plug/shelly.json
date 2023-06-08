@@ -1,0 +1,9 @@
+{
+  "type": "SHPLG2-1",
+  "mac": "112233AABCCD <REDACTED>",
+  "auth": true,
+  "fw": "20230503-101325/v1.13.0-g9aed950",
+  "discoverable": false,
+  "num_outputs": 1,
+  "num_meters": 1
+}
