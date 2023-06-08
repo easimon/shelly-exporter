@@ -115,15 +115,15 @@ class ShellyMetrics(
       ) { settings(address)?.lng }
 
       gauge(
-        "temperature",
+        "temperature.degrees.celsius", // FIXME: unit should be in base unit, but collides with fahrenheit then
         "Device temperature in degrees celsius.",
-        "degrees.celsius",
+        "",
         tags
       ) { status(address)?.temperature?.celsius }
       gauge(
-        "temperature",
+        "temperature.degrees.fahrenheit", // FIXME: unit should be in base unit, but collides with celsius then
+        "Device temperature in degrees fahrenheit.",
         "",
-        "degrees.fahrenheit",
         tags
       ) { status(address)?.temperature?.fahrenheit }
       boolGauge(
@@ -269,7 +269,7 @@ class ShellyMetrics(
     val counterId = FunctionCounter
       .builder(pre(name), this) { shellyClient.runCatching { func() }.getOrNull().orDefault() }
       .description(description)
-      .baseUnit(baseUnit)
+      .baseUnit(baseUnit.trimToNull())
       .tags(tags)
       .register(meterRegistry).id
 
@@ -288,7 +288,7 @@ class ShellyMetrics(
     val gaugeId = Gauge
       .builder(pre(name), this) { shellyClient.runCatching { func() }.getOrNull().orDefault() }
       .description(description)
-      .baseUnit(baseUnit)
+      .baseUnit(baseUnit.trimToNull())
       .tags(tags)
       .register(meterRegistry).id
 
@@ -335,4 +335,6 @@ class ShellyMetrics(
   private inline fun <AR : Any, R : AR?> catchingWithDefault(default: AR, block: () -> R): AR {
     return catching(block).getOrNull() ?: default
   }
+
+  private fun String?.trimToNull() = if (this.isNullOrBlank()) null else this
 }
