@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.4.0](https://github.com/easimon/shelly-exporter/compare/2.3.0...2.4.0) (2023-06-08)
+
+
+### Features
+
+* add metrics for Wifi and MQTT status ([fdd69a2](https://github.com/easimon/shelly-exporter/commit/fdd69a29bcd34e393775a065224d017e1ae6cd6d))
+
+
+### Bug Fixes
+
+* temperature in fahrenheit shows in metrics now ([6b5067b](https://github.com/easimon/shelly-exporter/commit/6b5067b4fada357ac6fdbaf79b523cd5e2d33629))
+
 ## [2.3.0](https://github.com/easimon/shelly-exporter/compare/2.2.1...2.3.0) (2023-04-13)
 
 
