@@ -1,8 +1,11 @@
 package click.dobel.shelly.exporter
 
-import click.dobel.shelly.exporter.client.api.Settings
-import click.dobel.shelly.exporter.client.api.Shelly
-import click.dobel.shelly.exporter.client.api.Status
+import click.dobel.shelly.exporter.client.api.gen1.Settings
+import click.dobel.shelly.exporter.client.api.gen1.Shelly
+import click.dobel.shelly.exporter.client.api.gen1.Status
+import click.dobel.shelly.exporter.client.api.gen2.Gen2ShellyConfig
+import click.dobel.shelly.exporter.client.api.gen2.Gen2ShellyDeviceInfo
+import click.dobel.shelly.exporter.client.api.gen2.Gen2ShellyStatus
 import click.dobel.shelly.exporter.config.ShellyConfigProperties
 import click.dobel.shelly.exporter.metrics.ShellyMetrics
 import click.dobel.shelly.exporter.metrics.ValueFilteringCollectorRegistry
@@ -20,7 +23,6 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.scheduling.annotation.EnableScheduling
 import java.util.concurrent.TimeUnit
 
-
 @Configuration
 @EnableCaching
 @EnableScheduling
@@ -32,8 +34,14 @@ class ShellyExporterConfiguration {
     private val API_CLASSES = listOf(
       Shelly::class,
       Status::class,
-      Settings::class
+      Settings::class,
+
+      Gen2ShellyStatus::class,
+      Gen2ShellyDeviceInfo::class,
+      Gen2ShellyConfig::class
     )
+
+    const val SCRAPE_FAILURE_VALUE = Double.NaN
   }
 
   @Bean
@@ -68,7 +76,7 @@ class ShellyExporterConfiguration {
   }
 
   @Bean
-  fun collectorRegistry(configProperties: ShellyConfigProperties): CollectorRegistry {
-    return ValueFilteringCollectorRegistry(configProperties.metrics.failureValue, true)
+  fun collectorRegistry(): CollectorRegistry {
+    return ValueFilteringCollectorRegistry(SCRAPE_FAILURE_VALUE, true)
   }
 }

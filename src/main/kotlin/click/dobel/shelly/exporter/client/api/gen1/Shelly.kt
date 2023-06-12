@@ -1,4 +1,4 @@
-package click.dobel.shelly.exporter.client.api
+package click.dobel.shelly.exporter.client.api.gen1
 
 import com.fasterxml.jackson.annotation.JsonProperty
 
