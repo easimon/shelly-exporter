@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.5.0](https://github.com/easimon/shelly-exporter/compare/2.4.0...2.5.0) (2023-06-27)
+
+
+### Features
+
+* add support for gen 2 devices (3EM pro) ([6f7eb82](https://github.com/easimon/shelly-exporter/commit/6f7eb824ad2a54e15f166f417707371a9ff5f6c6))
+
 ## [2.4.0](https://github.com/easimon/shelly-exporter/compare/2.3.0...2.4.0) (2023-06-08)
 
 
