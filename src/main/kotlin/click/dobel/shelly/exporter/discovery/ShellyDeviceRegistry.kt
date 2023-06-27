@@ -1,57 +1,44 @@
 package click.dobel.shelly.exporter.discovery
 
-import click.dobel.shelly.exporter.client.ShellyClient
 import click.dobel.shelly.exporter.config.ShellyConfigProperties
 import click.dobel.shelly.exporter.metrics.ShellyMetrics
-import mu.KLogging
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.scheduling.annotation.Scheduled
-import org.springframework.stereotype.Component
+import mu.KLoggable
 import java.net.Inet4Address
 
-@Component
-class ShellyDeviceRegistry(
-  private val configProperties: ShellyConfigProperties,
-  private val shellyClient: ShellyClient,
-  private val metrics: ShellyMetrics,
-  @Autowired(required = false) private val resolver: AddressResolver = DefaultAddressResolver
+abstract class ShellyDeviceRegistry(
+  private val devicesConfig: ShellyConfigProperties.Devices,
+  private val metrics: ShellyMetrics<*>,
+  private val resolver: AddressResolver,
+  logging: KLoggable,
 ) {
-  companion object : KLogging()
+  private val logger = logging.logger
 
-  val devices: MutableSet<ShellyDevice> = mutableSetOf()
+  private val devices: MutableSet<ShellyDevice> = mutableSetOf()
 
-  fun discoverAddresses(): Set<String> {
-    return configProperties.devices.hosts
+  abstract fun addressToDevice(address: String): ShellyDevice?
+
+  private fun addressToDeviceLogging(address: String): ShellyDevice? {
+    return addressToDevice(address).also {
+      if (it == null)
+        logger.warn { "Could not discover device at [${address}]." }
+    }
+  }
+
+  private fun discoverDevices(): Set<ShellyDevice> {
+    return discoverAddresses()
+      .mapNotNull(::addressToDeviceLogging)
+      .toSet()
+  }
+
+  private fun discoverAddresses(): Set<String> {
+    return devicesConfig.hosts
       .flatMap(resolver::resolveToAddresses)
       .filterIsInstance<Inet4Address>()
       .map { it.hostAddress }
       .toSet()
   }
 
-  fun addressToDevice(address: String): ShellyDevice? {
-    return shellyClient.runCatching {
-      settings(address)!!.run {
-        ShellyDevice(
-          mac = device.mac,
-          address = address,
-          name = name.trim(),
-          type = device.type,
-          firmwareVersion = firmwareVersion,
-        )
-      }
-    }.onFailure { ex ->
-      logger.warn { "Could not discover device at [${address}]; ${ex.message}" }
-    }.getOrNull()
-  }
-
-  fun discoverDevices(): Set<ShellyDevice> {
-    return discoverAddresses()
-      .mapNotNull(::addressToDevice)
-      .toSet()
-  }
-
-  @Scheduled(fixedRateString = "\${shelly.devices.discovery-interval:PT1M}")
-  fun updateAddresses() {
+  open fun updateAddresses() {
     logger.info("Updating device addresses.")
     val discovered = discoverDevices()
 

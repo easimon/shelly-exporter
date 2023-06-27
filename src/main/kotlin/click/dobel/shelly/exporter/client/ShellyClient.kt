@@ -1,64 +1,45 @@
 package click.dobel.shelly.exporter.client
 
-import click.dobel.shelly.exporter.client.api.Settings
-import click.dobel.shelly.exporter.client.api.Shelly
-import click.dobel.shelly.exporter.client.api.Status
-import click.dobel.shelly.exporter.config.ShellyConfigProperties
-import org.springframework.boot.web.client.RestTemplateBuilder
-import org.springframework.cache.annotation.Cacheable
-import org.springframework.stereotype.Component
+import mu.KLoggable
 import org.springframework.web.client.RestTemplate
 
-@Component
-class ShellyClient(
-  configProperties: ShellyConfigProperties,
-  restTemplateBuilder: RestTemplateBuilder
+abstract class ShellyClient(
+  loggable: KLoggable
 ) {
 
-  @Cacheable("Status", sync = true)
-  fun status(address: String) = get<Status>(address, "status")
+  companion object {
+    const val RETRIES = 3
+  }
 
-  @Cacheable("Shelly", sync = true)
-  fun shelly(address: String) = get<Shelly>(address, "shelly")
+  protected abstract val restTemplate: RestTemplate
+  protected val logger = loggable.logger
 
-  @Cacheable("Settings", sync = true)
-  fun settings(address: String) = get<Settings>(address, "settings")
-
-  private inline fun <reified T : Any> get(
+  protected inline fun <reified T : Any> get(
     address: String,
     path: String
   ): T? {
-    return try {
-      restTemplate.getForObject(url(address, path))
-    } catch (ex: Exception) {
+    val url = url(address, path)
+    return runCatching {
+      retry(RETRIES) {
+        restTemplate.getForObject<T>(url)
+      }
+    }.getOrElse { ex ->
+      logger.warn { "GET ${url}: HTTP Request failure: ${ex.message}" }
       null
     }
   }
 
-  private fun url(
-    address: String,
-    path: String
-  ): String = "http://${address}${slash(path)}"
-
-  private fun slash(
-    path: String
-  ): String = if (path.startsWith("/")) path else "/$path"
-
-  private val restTemplate: RestTemplate = restTemplateBuilder
-    .setConnectTimeout(configProperties.devices.connectTimeout)
-    .setReadTimeout(configProperties.devices.requestTimeout)
-    .runIf(configProperties.hasAuth) {
-      basicAuthentication(
-        configProperties.auth.username,
-        configProperties.auth.password
-      )
+  inline fun <T> retry(
+    retries: Int = 1,
+    call: () -> T
+  ): T? {
+    retryLoop@ for (i in 0..retries) {
+      val result = runCatching(call)
+      if (result.isFailure && i < retries) {
+        continue@retryLoop
+      }
+      return result.getOrThrow()
     }
-    .build()
-
-  private inline fun <T> T.runIf(condition: Boolean, block: T.() -> T): T {
-    return if (condition)
-      block()
-    else
-      this
+    error("Retries finished unexpectedly. Retries < 1?.")
   }
 }

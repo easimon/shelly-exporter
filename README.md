@@ -8,7 +8,8 @@ the exporter does not require Shelly cloud (but runs fine alongside).
 
 ## Supported devices
 
-At the moment, this exporter is tested only with *Shelly Plug* and *Shelly Plug S*, since this is what I own.
+The exporter supports Gen1 and Gen2 devices, but is tested only on *Shelly Plug*, *Shelly Plug S* and
+*Shelly Pro 3EM*, since this is what I own.
 Other series *might* be supported as well, since the HTTP API is similar (not identical) across the whole Shelly family.
 If you have a different Shelly device, please tell me if it works or not.
 
@@ -25,12 +26,26 @@ items and their defaults, see the [application.yaml](./src/main/resources/applic
 By default, Shelly devices allow unauthenticated access to the local HTTP API. If you protected the local API with a
 username and password, it needs to be the same across all devices. This is not the Shelly cloud username and password.
 
-| Environment variable              | Description                                             | Default | Required |
-|-----------------------------------|---------------------------------------------------------|---------|----------|
-| SHELLY_DEVICES_HOSTS              | Comma-separated list of hostnames and/or IP addresses   | (none)  | yes      |
-| SHELLY_AUTH_USERNAME              | Shelly HTTP API username (must be same for all devices) | (none)  | no       |
-| SHELLY_AUTH_PASSWORD              | Shelly HTTP API password (must be same for all devices) | (none)  | no       |
-| SHELLY_DEVICES_DISCOVERY_INTERVAL | Interval to start a device discovery                    | 5 min   | no       |
+Shelly has two generations of devices, first and second Generation (Gen 1, Gen2). This exporter supports both to some
+extent, but has no auto-detection for the device generation. Instead your need to define two sets of hosts, username,
+password. Since the API of these two generations is completely different, make sure to add your devices to the correct
+environment variable `SHELLY_DEVICES_HOSTS` or `SHELLY_GEN2DEVICES_HOSTS`. Refer to
+[https://shelly-api-docs.shelly.cloud/](https://shelly-api-docs.shelly.cloud/) to find if your devices are Gen1 or
+Gen2. If you do not own devices of one of the generations, just leave the corresponding `*_HOSTS` empty.
+
+While it is possible to define `SHELLY_GEN2AUTH_USERNAME`, there is no way to alter the authentication username
+on the Shelly devices itself, instead it's hard-coded to 'admin'.
+
+| Environment variable                  | Description                                                             | Default | Required |
+|---------------------------------------|-------------------------------------------------------------------------|---------|----------|
+| SHELLY_DEVICES_HOSTS                  | Comma-separated list of hostnames and/or IP addresses for Gen 1 devices | (none)  | no       |
+| SHELLY_AUTH_USERNAME                  | Shelly Gen 1 HTTP API username (must be same for all Gen 1 devices)     | (none)  | no       |
+| SHELLY_AUTH_PASSWORD                  | Shelly Gen 1 HTTP API password (must be same for all Gen 1 devices)     | (none)  | no       |
+| SHELLY_DEVICES_DISCOVERY_INTERVAL     | Interval to start a device discovery for Gen 1 devices                  | 5 min   | no       |
+| SHELLY_GEN2DEVICES_HOSTS              | Comma-separated list of hostnames and/or IP addresses for Gen 2 devices | (none)  | no       |
+| SHELLY_GEN2AUTH_USERNAME              | Shelly Gen 2 HTTP API username (defaults to admin, do not change)       | admin   | no       |
+| SHELLY_GEN2AUTH_PASSWORD              | Shelly Gen 2 HTTP API password (must be same for all Gen 2 devices)     | (none)  | no       |
+| SHELLY_GEN2DEVICES_DISCOVERY_INTERVAL | Interval to start a device discovery for Gen 2 devices                  | 5 min   | no       |
 
 #### Device discovery
 
@@ -41,8 +56,8 @@ reappear after the discovery interval. Discovery failures are logged with a reas
 - device not responding
 - authentication failure (username/password incorrect)
 
-If you have the possibility to create a single DNS A record that contains all Shelly device addresses, this is a
-supported scenario (and actually how I run the exporter):
+If you have the possibility to create a single DNS A record that contains all Shelly device addresses (or two, one per
+device generation, this is a supported scenario (and actually how I run the exporter):
 
 ```bash
 $ dig shellies

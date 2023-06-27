@@ -4,11 +4,22 @@ shelly:
     password: ''
   devices:
     discovery-interval: PT5M
-    connect-timeout: PT0.5S
-    request-timeout: PT0.5S
     hosts: [ ]
-  metrics:
-    failure-value: NaN
+
+  gen2auth:
+    username: 'admin' # not changeable at the moment
+    password: ${shelly.auth.password}
+  gen2devices:
+    discovery-interval: ${shelly.devices.discovery-interval}
+    hosts: [ ]
+
+  http-params:
+    connect-timeout: PT5S
+    request-timeout: PT5S
+    validation-period: PT0.5S
+    time-to-live: PT5S
+    max-connections-total: 200
+    max-connections-per-route: 10
 
 management:
   endpoints:
