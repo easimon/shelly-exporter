@@ -11,7 +11,7 @@
 
   <groupId>click.dobel</groupId>
   <artifactId>shelly-exporter</artifactId>
-  <version>2.5.0</version><!-- x-release-please-version -->
+  <version>2.5.1</version><!-- x-release-please-version -->
   <name>shelly-exporter</name>
   <description>Shelly Prometheus Exporter</description>
 

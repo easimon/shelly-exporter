@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.5.1](https://github.com/easimon/shelly-exporter/compare/2.5.0...2.5.1) (2023-11-06)
+
+
+### Bug Fixes
+
+* trigger release for dependency updates ([3fcbe2d](https://github.com/easimon/shelly-exporter/commit/3fcbe2d137c6a9db0ee44a3fc7d02039e97e633b))
+* trigger release for dependency updates ([f9ee2fa](https://github.com/easimon/shelly-exporter/commit/f9ee2fa0c8ef49d4b8d1f9755dcea82d85e304a7))
+
 ## [2.5.0](https://github.com/easimon/shelly-exporter/compare/2.4.0...2.5.0) (2023-06-27)
 
 
