@@ -1,0 +1,13 @@
+{
+  "packages": {
+    ".": {
+      "release-type": "simple",
+      "package-name": "shelly-exporter",
+      "include-v-in-tag": false,
+      "extra-files": [
+        "README.md",
+        "pom.xml"
+      ]
+    }
+  }
+}
