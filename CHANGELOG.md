@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.5.2](https://github.com/easimon/shelly-exporter/compare/2.5.1...v2.5.2) (2024-02-04)
+
+
+### Bug Fixes
+
+* do not swallow exception on http client errors ([ef77464](https://github.com/easimon/shelly-exporter/commit/ef77464ef544b6a4d188287e80f04c45d9fd5ad0))
+
 ## [2.5.1](https://github.com/easimon/shelly-exporter/compare/2.5.0...2.5.1) (2023-11-06)
 
 
