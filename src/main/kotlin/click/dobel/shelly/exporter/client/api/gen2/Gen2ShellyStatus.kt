@@ -3,6 +3,7 @@ package click.dobel.shelly.exporter.client.api.gen2
 import com.fasterxml.jackson.annotation.JsonProperty
 import java.util.EnumSet
 
+@Suppress("LongParameterList")
 class Gen2ShellyStatus(
   //@JsonProperty("ble")
 

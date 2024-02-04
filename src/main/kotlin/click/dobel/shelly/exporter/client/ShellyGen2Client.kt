@@ -15,7 +15,6 @@ class ShellyGen2Client(
   configProperties: ShellyConfigProperties,
   restTemplateBuilder: RestTemplateBuilder
 ) : ShellyClient(this) {
-
   companion object : KLogging()
 
   @Cacheable("Gen2ShellyStatus", sync = true)
