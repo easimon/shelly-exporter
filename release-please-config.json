@@ -1,6 +1,7 @@
 {
   "packages": {
     ".": {
+      "bootstrap-sha": "efa2c878994f7586af38a5b83ff81610a6dc4997",
       "release-type": "simple",
       "package-name": "shelly-exporter",
       "include-v-in-tag": false,
