@@ -1,5 +1,14 @@
 # Changelog
 
+## [2.5.5](https://github.com/easimon/shelly-exporter/compare/2.5.4...2.5.5) (2024-02-17)
+
+
+### Bug Fixes
+
+* empty commit to test release-please 4 ([6753b40](https://github.com/easimon/shelly-exporter/commit/6753b40e2cb6bee2727ce1dd38b65b879d61ee1c))
+* gen2: make wifi status ip and ssid optional ([0439c8d](https://github.com/easimon/shelly-exporter/commit/0439c8db720fe784a23294da333ceb88e973b55b))
+* suppress spread operator warning ([6da571d](https://github.com/easimon/shelly-exporter/commit/6da571d610c6168588579e0f485ed540a72a7705))
+
 ## [2.5.4](https://github.com/easimon/shelly-exporter/compare/v2.5.3...2.5.4) (2024-02-04)
 
 
