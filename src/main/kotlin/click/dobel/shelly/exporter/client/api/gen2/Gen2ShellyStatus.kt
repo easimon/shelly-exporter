@@ -97,11 +97,11 @@ data class Temperature(
 
 data class WifiStatus(
   @JsonProperty("sta_ip")
-  val ip: String,
+  val ip: String?,
   @JsonProperty("status")
   val status: String,
   @JsonProperty("ssid")
-  val ssid: String,
+  val ssid: String?,
   @JsonProperty("rssi")
   val rssi: Int,
 )
