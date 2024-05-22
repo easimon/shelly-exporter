@@ -1,26 +1,47 @@
 # Changelog
 
-## [2.5.5](https://github.com/easimon/shelly-exporter/compare/2.5.4...2.5.5) (2024-02-17)
+## [2.5.6](https://github.com/easimon/shelly-exporter/compare/2.5.5...2.5.6) (2024-05-22)
 
+### Dependencies
+
+- Spring Boot 3.2.5
+- Kotlin 2.0.0
+- Kotest 5.9.0
 
 ### Bug Fixes
 
-* empty commit to test release-please 4 ([6753b40](https://github.com/easimon/shelly-exporter/commit/6753b40e2cb6bee2727ce1dd38b65b879d61ee1c))
-* gen2: make wifi status ip and ssid optional ([0439c8d](https://github.com/easimon/shelly-exporter/commit/0439c8db720fe784a23294da333ceb88e973b55b))
-* suppress spread operator warning ([6da571d](https://github.com/easimon/shelly-exporter/commit/6da571d610c6168588579e0f485ed540a72a7705))
+* make some metrics attributes optional in Gen1
+  devices ([b6f79d4](https://github.com/easimon/shelly-exporter/commit/b6f79d47133b073b138c9c90634cda635e81f6e0))
+
+## [2.5.5](https://github.com/easimon/shelly-exporter/compare/2.5.4...2.5.5) (2024-02-17)
+
+### Bug Fixes
+
+* empty commit to test release-please
+  4 ([6753b40](https://github.com/easimon/shelly-exporter/commit/6753b40e2cb6bee2727ce1dd38b65b879d61ee1c))
+* gen2: make wifi status ip and ssid
+  optional ([0439c8d](https://github.com/easimon/shelly-exporter/commit/0439c8db720fe784a23294da333ceb88e973b55b))
+* suppress spread operator
+  warning ([6da571d](https://github.com/easimon/shelly-exporter/commit/6da571d610c6168588579e0f485ed540a72a7705))
 
 ## [2.5.4](https://github.com/easimon/shelly-exporter/compare/v2.5.3...2.5.4) (2024-02-04)
 
-
 ### Bug Fixes
 
-* do not swallow exception on http client errors ([ef77464](https://github.com/easimon/shelly-exporter/commit/ef77464ef544b6a4d188287e80f04c45d9fd5ad0))
-* fix release build ([d4b7b5a](https://github.com/easimon/shelly-exporter/commit/d4b7b5abcc3b921b2035ddbe985a8bfa379521ee))
-* fix release-please build ([467606d](https://github.com/easimon/shelly-exporter/commit/467606d622fc5fd166eb83697e33492262d67df6))
-* fix release-please build ([b771917](https://github.com/easimon/shelly-exporter/commit/b7719174509ebf3d23cb12f6c5c4f6d8037b5a17))
-* oh fuck you, release-please ([5174722](https://github.com/easimon/shelly-exporter/commit/517472233a80c9b97ea0c311233fdd6fb6e8cc66))
-* release please action 4 sucks ([42a5d2f](https://github.com/easimon/shelly-exporter/commit/42a5d2f655c926f20f194c573b12f71aa8d53b9b))
-* release please action 4 sucks ([cda5b95](https://github.com/easimon/shelly-exporter/commit/cda5b9506d1426b601a845be69bad05a34b6d867))
+* do not swallow exception on http client
+  errors ([ef77464](https://github.com/easimon/shelly-exporter/commit/ef77464ef544b6a4d188287e80f04c45d9fd5ad0))
+* fix release
+  build ([d4b7b5a](https://github.com/easimon/shelly-exporter/commit/d4b7b5abcc3b921b2035ddbe985a8bfa379521ee))
+* fix release-please
+  build ([467606d](https://github.com/easimon/shelly-exporter/commit/467606d622fc5fd166eb83697e33492262d67df6))
+* fix release-please
+  build ([b771917](https://github.com/easimon/shelly-exporter/commit/b7719174509ebf3d23cb12f6c5c4f6d8037b5a17))
+* oh fuck you,
+  release-please ([5174722](https://github.com/easimon/shelly-exporter/commit/517472233a80c9b97ea0c311233fdd6fb6e8cc66))
+* release please action 4
+  sucks ([42a5d2f](https://github.com/easimon/shelly-exporter/commit/42a5d2f655c926f20f194c573b12f71aa8d53b9b))
+* release please action 4
+  sucks ([cda5b95](https://github.com/easimon/shelly-exporter/commit/cda5b9506d1426b601a845be69bad05a34b6d867))
 * release-please ([4604752](https://github.com/easimon/shelly-exporter/commit/4604752141fc3aa58dd65bdd6ebf17f3447f748d))
 * release-please ([4b86837](https://github.com/easimon/shelly-exporter/commit/4b86837297c29227d7fb8ea9458820aa145d0260))
 
