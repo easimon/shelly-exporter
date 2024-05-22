@@ -55,7 +55,7 @@ data class Status(
     @JsonProperty("timer_remaining")
     val timerRemaining: Long,
     @JsonProperty("overpower")
-    val overpower: Boolean,
+    val overpower: Boolean?,
     @JsonProperty("source")
     val source: String,
   )
@@ -64,21 +64,25 @@ data class Status(
     @JsonProperty("power")
     val power: Double,
     @JsonProperty("overpower")
-    val overpower: Double,
+    val overpower: Double?,
     @JsonProperty("is_valid")
     val isValid: Boolean,
     @JsonProperty("timestamp")
-    val timestamp: Long,
+    val timestamp: Long?,
     @JsonProperty("counters")
-    val counters: List<Double>,
+    val counters: List<Double> = emptyList(),
     /**
      * total consumption in watt-minutes.
      */
     @JsonProperty("total")
-    val wattMinutesTotal: Double,
+    val wattMinutesTotal: Double = 0.0,
   ) {
     @get:JsonIgnore
-    val wattHoursTotal get() = wattMinutesTotal / 60.0
+    val wattHoursTotal get() = wattMinutesTotal / MINUTES_PER_HOUR
+
+    companion object {
+      const val MINUTES_PER_HOUR = 60.0
+    }
   }
 
   data class Temperature(
