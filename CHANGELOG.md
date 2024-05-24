@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.5.7](https://github.com/easimon/shelly-exporter/compare/2.5.6...2.5.7) (2024-05-24)
+
+
+### Bug Fixes
+
+* make some metrics attributes optional in Gen1 devices for real ([f9eb7df](https://github.com/easimon/shelly-exporter/commit/f9eb7df1c513f00c3a2b74922bae7a349f5ee922))
+
 ## [2.5.6](https://github.com/easimon/shelly-exporter/compare/2.5.5...2.5.6) (2024-05-22)
 
 ### Dependencies
