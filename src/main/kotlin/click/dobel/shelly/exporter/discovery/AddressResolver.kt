@@ -14,7 +14,8 @@ object DefaultAddressResolver : AddressResolver, KLogging() {
     return try {
       InetAddress.getAllByName(name).asList()
     } catch (ex: UnknownHostException) {
-      logger.warn(ex) { "Could not resolve '${name}'." }
+      logger.warn { "Could not resolve '${name}': ${ex.message}" }
+      logger.trace(ex) { "Stack trace:" }
       emptyList()
     }
   }

@@ -29,25 +29,6 @@ private fun <T> T.runIf(condition: Boolean, block: T.() -> T): T {
     this
 }
 
-/*
-fun createRestTemplate(
-  auth: ShellyConfigProperties.Auth,
-  httpParams: ShellyConfigProperties.HttpParams,
-  builder: RestTemplateBuilder,
-): RestTemplate {
-  return builder
-    .setConnectTimeout(httpParams.connectTimeout)
-    .setReadTimeout(httpParams.requestTimeout)
-    .runIf(auth.isEnabled) {
-      basicAuthentication(
-        auth.username,
-        auth.password
-      )
-    }
-    .build()
-}
-*/
-
 fun RestTemplateBuilder.createRestTemplate(
   auth: ShellyConfigProperties.Auth,
   httpParams: ShellyConfigProperties.HttpParams,
