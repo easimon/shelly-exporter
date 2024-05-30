@@ -24,7 +24,8 @@ abstract class ShellyClient(
         restTemplate.getForObject<T>(url)
       }
     }.getOrElse { ex ->
-      logger.warn(ex) { "GET ${url}: HTTP Request failure: ${ex.message}" }
+      logger.warn { "GET ${url}: HTTP Request failure: ${ex.message}" }
+      logger.trace(ex) { "Stack trace:" }
       null
     }
   }
