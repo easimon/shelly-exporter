@@ -1,5 +1,14 @@
 # Changelog
 
+## [2.5.8](https://github.com/easimon/shelly-exporter/compare/2.5.7...2.5.8) (2024-05-30)
+
+
+### Bug Fixes
+
+* log exceptions to debug only ([9541d28](https://github.com/easimon/shelly-exporter/commit/9541d2892191b2136c74f0f5ac7e81ee5f557ded))
+* make some metrics attributes optional in Gen1 devices for real ([fa7fa1c](https://github.com/easimon/shelly-exporter/commit/fa7fa1c215294522f4478a5169ab8d4bbf786ad2))
+* update invalid metrics filter for prometheus-metrics 1.2.1 ([6bf93e9](https://github.com/easimon/shelly-exporter/commit/6bf93e9375fee356d87615f7209722c588729960))
+
 ## [2.5.7](https://github.com/easimon/shelly-exporter/compare/2.5.6...2.5.7) (2024-05-24)
 
 
