@@ -7,13 +7,7 @@ import click.dobel.shelly.exporter.client.api.gen2.Gen2ShellyConfig
 import click.dobel.shelly.exporter.client.api.gen2.Gen2ShellyDeviceInfo
 import click.dobel.shelly.exporter.client.api.gen2.Gen2ShellyStatus
 import click.dobel.shelly.exporter.config.ShellyConfigProperties
-import click.dobel.shelly.exporter.metrics.ShellyMetrics
-import click.dobel.shelly.exporter.metrics.ValueFilteringCollectorRegistry
 import com.github.benmanes.caffeine.cache.Caffeine
-import io.micrometer.core.instrument.Meter
-import io.micrometer.core.instrument.config.MeterFilter
-import io.micrometer.core.instrument.config.MeterFilterReply
-import io.prometheus.client.CollectorRegistry
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.cache.CacheManager
 import org.springframework.cache.annotation.EnableCaching
@@ -40,8 +34,6 @@ class ShellyExporterConfiguration {
       Gen2ShellyDeviceInfo::class,
       Gen2ShellyConfig::class
     )
-
-    const val SCRAPE_FAILURE_VALUE = Double.NaN
   }
 
   @Bean
@@ -60,23 +52,5 @@ class ShellyExporterConfiguration {
     val manager = CaffeineCacheManager(*cacheNames())
     manager.setCaffeine(caffeineConfig)
     return manager
-  }
-
-  @Bean
-  fun meterFilter(): MeterFilter? {
-    return object : MeterFilter {
-      override fun accept(id: Meter.Id): MeterFilterReply {
-        return if (id.name.startsWith(ShellyMetrics.PREFIX)) {
-          MeterFilterReply.ACCEPT
-        } else {
-          MeterFilterReply.DENY
-        }
-      }
-    }
-  }
-
-  @Bean
-  fun collectorRegistry(): CollectorRegistry {
-    return ValueFilteringCollectorRegistry(SCRAPE_FAILURE_VALUE, true)
   }
 }

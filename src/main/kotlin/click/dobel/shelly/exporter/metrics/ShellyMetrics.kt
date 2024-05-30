@@ -1,6 +1,6 @@
 package click.dobel.shelly.exporter.metrics
 
-import click.dobel.shelly.exporter.ShellyExporterConfiguration
+import click.dobel.shelly.exporter.ShellyExporterMetricsConfiguration
 import click.dobel.shelly.exporter.client.ShellyClient
 import click.dobel.shelly.exporter.discovery.ShellyDevice
 import io.micrometer.core.instrument.FunctionCounter
@@ -96,12 +96,12 @@ abstract class ShellyMetrics<T : ShellyClient>(
     gauge(name, description, null, tags) { func().toDouble() }
   }
 
-  private fun Number?.orDefault(): Double = this?.toDouble() ?: ShellyExporterConfiguration.SCRAPE_FAILURE_VALUE
+  private fun Number?.orDefault(): Double = this?.toDouble() ?: ShellyExporterMetricsConfiguration.SCRAPE_FAILURE_VALUE
 
   private fun Boolean?.toDouble(): Double = when (this) {
     true -> 1.0
     false -> 0.0
-    else -> ShellyExporterConfiguration.SCRAPE_FAILURE_VALUE
+    else -> ShellyExporterMetricsConfiguration.SCRAPE_FAILURE_VALUE
   }
 
   protected fun deviceTags(device: ShellyDevice): Tags {
