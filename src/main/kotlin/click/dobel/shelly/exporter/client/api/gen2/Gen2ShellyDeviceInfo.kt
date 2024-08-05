@@ -22,5 +22,5 @@ data class Gen2ShellyDeviceInfo(
   @JsonProperty("auth_en")
   val authEnabled: Boolean,
   @JsonProperty("auth_domain")
-  val authDomain: String,
+  val authDomain: String?,
 )
