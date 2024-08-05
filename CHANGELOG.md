@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.5.9](https://github.com/easimon/shelly-exporter/compare/2.5.8...2.5.9) (2024-08-05)
+
+
+### Bug Fixes
+
+* do not require the (unused) 'auth_domain' field in gen 2 deviceinfo ([8330e46](https://github.com/easimon/shelly-exporter/commit/8330e46aaea5dee5e0807d6f190b84e5abaaca5d))
+
 ## [2.5.8](https://github.com/easimon/shelly-exporter/compare/2.5.7...2.5.8) (2024-05-30)
 
 ### Bug Fixes

@@ -89,14 +89,14 @@ $ SHELLY_AUTH_USERNAME=your_username \
 Optional: To build the docker container yourself, check out this repository and build it using
 
 ```bash
-$ export SHELLY_EXPORTER_IMAGE=ghcr.io/easimon/shelly-exporter:v2.5.8 # x-release-please-version
+$ export SHELLY_EXPORTER_IMAGE=ghcr.io/easimon/shelly-exporter:v2.5.9 # x-release-please-version
 $ docker build --tag $SHELLY_EXPORTER_IMAGE .
 ```
 
 Running it
 
 ```bash
-$ export SHELLY_EXPORTER_IMAGE=ghcr.io/easimon/shelly-exporter:v2.5.8 # x-release-please-version
+$ export SHELLY_EXPORTER_IMAGE=ghcr.io/easimon/shelly-exporter:v2.5.9 # x-release-please-version
 $ docker run \
   -e SHELLY_AUTH_USERNAME=your_username \
   -e SHELLY_AUTH_PASSWORD=your_password \
