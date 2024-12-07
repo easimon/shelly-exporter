@@ -5,12 +5,14 @@ import click.dobel.shelly.exporter.discovery.ShellyDevice
 import io.micrometer.core.instrument.MeterRegistry
 import io.micrometer.core.instrument.Tag
 import mu.KLogging
+import org.springframework.boot.actuate.metrics.startup.StartupTimeMetricsListener
 import org.springframework.stereotype.Component
 
 @Component
 class ShellyGen2Metrics(
   client: ShellyGen2Client,
   meterRegistry: MeterRegistry,
+  private val startupTimeMetrics: StartupTimeMetricsListener,
 ) : ShellyMetrics<ShellyGen2Client>(
   client,
   meterRegistry,
@@ -23,6 +25,7 @@ class ShellyGen2Metrics(
     with(device) {
       val tags = deviceTags(device)
 
+      // General
       boolGauge(
         "cloud.enabled",
         "Whether Shelly cloud is enabled.",
@@ -76,17 +79,20 @@ class ShellyGen2Metrics(
         tags
       ) { config(address)?.sys?.location?.lng }
 
+      // Shelly Plus 3EM has device temperature.
+      // Tag with channel "main" for compatibility with switch temperatures (channels 0...)
+      val tempTags = tags.and(Tag.of(TAGNAME_CHANNEL, "main"))
       gauge(
         "temperature.degrees.celsius", // FIXME: unit should be in base unit, but collides with fahrenheit then
         "Device temperature in degrees celsius.",
         "",
-        tags
+        tempTags
       ) { status(address)?.temperature?.celsius }
       gauge(
         "temperature.degrees.fahrenheit", // FIXME: unit should be in base unit, but collides with celsius then
         "Device temperature in degrees fahrenheit.",
         "",
-        tags
+        tempTags
       ) { status(address)?.temperature?.fahrenheit }
 
       boolGauge(
@@ -126,6 +132,80 @@ class ShellyGen2Metrics(
         tags
       ) { status(address)?.sys?.ramFree }
 
+      // Shelly Plus 1PM
+      val inputTags = tags.and(Tag.of(TAGNAME_CHANNEL, 0.toString()))
+      boolGauge(
+        "input.on",
+        "Whether the input is switched on.",
+        inputTags
+      ) { status(address)?.input0?.state }
+
+      // Switches, e.g. Shelly Plus 1PM and Plug
+      for (index in (client.status(address)?.switches?.keys ?: emptySet())) {
+        val switchTags = tags.and(Tag.of(TAGNAME_CHANNEL, index.toString()))
+
+        boolGauge(
+          "relay.on",
+          "Whether the relay is switched on.",
+          switchTags
+        ) { status(address)?.switches?.get(index)?.outputEnabled }
+        gauge(
+          "meter.power.current",
+          "Momentary power consumption in watts.",
+          "watts",
+          switchTags
+        ) { status(address)?.switches?.get(index)?.power }
+        gauge(
+          "meter.voltage.current",
+          "Momentary voltage in volts.",
+          "volts",
+          switchTags
+        ) { status(address)?.switches?.get(index)?.voltage }
+        gauge(
+          "meter.current.current",
+          "Momentary current in amperes.",
+          "amperes",
+          switchTags
+        ) { status(address)?.switches?.get(index)?.current }
+        gauge(
+          "meter.power",
+          "Total power consumption in watt-hours.",
+          "watthours",
+          switchTags
+        ) { status(address)?.switches?.get(index)?.energy?.total }
+        gauge(
+          "meter.power.returned",
+          "Total power production in watt-hours (returned to the grid).",
+          "watthours",
+          switchTags
+        ) { status(address)?.switches?.get(index)?.returnedEnergy?.total }
+        gauge(
+          "meter.powerfactor",
+          "Momentary power factor.",
+          "",
+          switchTags
+        ) { status(address)?.switches?.get(index)?.powerFactor }
+        gauge(
+          "meter.frequency",
+          "Momentary frequency in Hz.",
+          "Hz",
+          switchTags
+        ) { status(address)?.switches?.get(index)?.frequency }
+        gauge(
+          "temperature.degrees.celsius", // FIXME: unit should be in base unit, but collides with fahrenheit then
+          "Device temperature in degrees celsius.",
+          "",
+          switchTags
+        ) { status(address)?.switches?.get(index)?.temperature?.celsius }
+        gauge(
+          "temperature.degrees.fahrenheit", // FIXME: unit should be in base unit, but collides with celsius then
+          "Device temperature in degrees fahrenheit.",
+          "",
+          switchTags
+        ) { status(address)?.switches?.get(index)?.temperature?.fahrenheit }
+      }
+
+      // Meters, e.g. Shelly Plus 3EM
       for (index in client.status(address)?.phaseNames ?: emptySet()) {
         val meterTags = tags.and(Tag.of(TAGNAME_CHANNEL, index.metricName))
 
@@ -137,7 +217,7 @@ class ShellyGen2Metrics(
         ) { status(address)?.phaseData?.get(index)?.totalActualEnergy }
         counter(
           "meter.power.returned",
-          "Total power production in watt-hours.",
+          "Total power production in watt-hours (returned to the grid).",
           "watthours",
           meterTags
         ) { status(address)?.phaseData?.get(index)?.totalActualReturnedEnergy }
