@@ -8,7 +8,7 @@ class Gen2ShellyStatus(
   //@JsonProperty("ble")
 
   @JsonProperty("cloud")
-  val cloud: Cloud,
+  val cloud: Cloud?,
 
   @JsonProperty("em:0")
   val emStatus: Gen2EmStatus?,
@@ -24,16 +24,16 @@ class Gen2ShellyStatus(
   //@JsonProperty("modbus")
 
   @JsonProperty("mqtt")
-  val mqtt: Mqtt,
+  val mqtt: Mqtt?,
 
   @JsonProperty("sys")
-  val sys: SysStatus,
+  val sys: SysStatus?,
 
   @JsonProperty("temperature:0")
-  val temperature: Temperature,
+  val temperature: Temperature?,
 
   @JsonProperty("wifi")
-  val wifi: WifiStatus,
+  val wifi: WifiStatus?,
 ) {
   val phaseNames: Set<Gen2PhaseNames> = EnumSet.allOf(Gen2PhaseNames::class.java)
   val phaseStatus = emStatus?.phases
