@@ -8,33 +8,38 @@ class Gen2ShellyStatus(
   //@JsonProperty("ble")
 
   @JsonProperty("cloud")
-  val cloud: Cloud,
+  val cloud: Cloud?,
 
   @JsonProperty("em:0")
-  val emStatus: Gen2EmStatus,
+  val emStatus: Gen2EmStatus?,
   @JsonProperty("emdata:0")
-  val emData: Gen2EmData,
+  val emData: Gen2EmData?,
+
+  @JsonProperty("input:0")
+  val input0: Gen2Input?,
+  @JsonProperty("switch:0")
+  val switch0: Gen2Switch?,
 
   //@JsonProperty("eth")
   //@JsonProperty("modbus")
 
   @JsonProperty("mqtt")
-  val mqtt: Mqtt,
+  val mqtt: Mqtt?,
 
   @JsonProperty("sys")
-  val sys: SysStatus,
+  val sys: SysStatus?,
 
   @JsonProperty("temperature:0")
-  val temperature: Temperature,
+  val temperature: Temperature?,
 
   @JsonProperty("wifi")
-  val wifi: WifiStatus,
-
-  //@JsonProperty("ws")
+  val wifi: WifiStatus?,
 ) {
-  val phaseNames = EnumSet.allOf(Gen2PhaseNames::class.java)
-  val phaseStatus = emStatus.phases
-  val phaseData = emData.phases
+  val phaseNames: Set<Gen2PhaseNames> = EnumSet.allOf(Gen2PhaseNames::class.java)
+  val phaseStatus = emStatus?.phases
+  val phaseData = emData?.phases
+
+  val switches = mapOf(0 to switch0).filterValues { it != null }
 }
 
 data class Cloud(
@@ -86,9 +91,6 @@ data class AvailableUpdate(
 )
 
 data class Temperature(
-  @JsonProperty("id")
-  val id: Int,
-
   @JsonProperty("tC")
   val celsius: Double,
   @JsonProperty("tF")
