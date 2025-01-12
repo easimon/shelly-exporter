@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.6.0](https://github.com/easimon/shelly-exporter/compare/2.5.9...2.6.0) (2024-12-20)
+
+
+### Features
+
+* Gen2: Add support for switches and inputs ([fa6715a](https://github.com/easimon/shelly-exporter/commit/fa6715a677c4fe6004f129fc14c6f2736c41aa88))
+
+
+### Bug Fixes
+
+* Gen2: make all status fields optional ([6123933](https://github.com/easimon/shelly-exporter/commit/6123933831ff511df38fd92ec399e1b37c1671ac))
+
 ## [2.5.9](https://github.com/easimon/shelly-exporter/compare/2.5.8...2.5.9) (2024-08-05)
 
 
