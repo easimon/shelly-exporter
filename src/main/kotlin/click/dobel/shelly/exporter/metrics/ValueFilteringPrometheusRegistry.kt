@@ -6,6 +6,7 @@ import io.prometheus.metrics.model.snapshots.CounterSnapshot
 import io.prometheus.metrics.model.snapshots.DataPointSnapshot
 import io.prometheus.metrics.model.snapshots.GaugeSnapshot
 import io.prometheus.metrics.model.snapshots.MetricMetadata
+import io.prometheus.metrics.model.snapshots.MetricSnapshot
 import io.prometheus.metrics.model.snapshots.MetricSnapshots
 import mu.KLogging
 import java.util.function.Predicate
@@ -51,35 +52,31 @@ class ValueFilteringPrometheusRegistry(
   private fun MetricSnapshots.removeInvalidDataPoints(): MetricSnapshots {
     val results = MetricSnapshots.builder()
 
-    this.forEach { metricSnapshot ->
-      val filteredSnapshot = when (metricSnapshot) {
-        is CounterSnapshot -> {
-          CounterSnapshot(
-            metricSnapshot.metadata,
-            metricSnapshot.dataPoints.filter { dataPointSnapshot ->
-              dataPointSnapshot.value.isValid(metricName(metricSnapshot.metadata, dataPointSnapshot))
-            }
-          )
-        }
-
-        is GaugeSnapshot -> {
-          GaugeSnapshot(
-            metricSnapshot.metadata,
-            metricSnapshot.dataPoints.filter { dataPointSnapshot ->
-              dataPointSnapshot.value.isValid(metricName(metricSnapshot.metadata, dataPointSnapshot))
-            }
-          )
-        }
-
-        else -> {
-          metricSnapshot
-        }
-      }
-      if (filteredSnapshot.dataPoints.isNotEmpty()) {
-        results.metricSnapshot(filteredSnapshot)
-      }
-    }
+    this
+      .map { metricSnapshot -> metricSnapshot.filtered() }
+      .filter { it.dataPoints.isNotEmpty() }
+      .forEach(results::metricSnapshot)
 
     return results.build()
   }
+
+  private fun MetricSnapshot.filtered() = when (this) {
+    is CounterSnapshot -> filtered()
+    is GaugeSnapshot -> filtered()
+    else -> this
+  }
+
+  private fun CounterSnapshot.filtered() = CounterSnapshot(
+    this.metadata,
+    this.dataPoints.filter { dataPointSnapshot: CounterSnapshot.CounterDataPointSnapshot ->
+      dataPointSnapshot.value.isValid(metricName(this.metadata, dataPointSnapshot))
+    }
+  )
+
+  private fun GaugeSnapshot.filtered() = GaugeSnapshot(
+    this.metadata,
+    this.dataPoints.filter { dataPointSnapshot: GaugeSnapshot.GaugeDataPointSnapshot ->
+      dataPointSnapshot.value.isValid(metricName(this.metadata, dataPointSnapshot))
+    }
+  )
 }
