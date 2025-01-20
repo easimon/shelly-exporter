@@ -22,6 +22,7 @@ class ShellyGen1Metrics(
     logger.info { "Registering ${device}." }
     with(device) {
       val tags = deviceTags(device)
+      val tempTags = tags.and(TAGNAME_CHANNEL, "main")
 
       gauge(
         "power.max",
@@ -86,23 +87,23 @@ class ShellyGen1Metrics(
         "temperature.degrees.celsius", // FIXME: unit should be in base unit, but collides with fahrenheit then
         "Device temperature in degrees celsius.",
         "",
-        tags
+        tempTags
       ) { status(address)?.temperature?.celsius }
       gauge(
         "temperature.degrees.fahrenheit", // FIXME: unit should be in base unit, but collides with celsius then
         "Device temperature in degrees fahrenheit.",
         "",
-        tags
+        tempTags
       ) { status(address)?.temperature?.fahrenheit }
       boolGauge(
         "temperature.valid",
         "Whether the current temperature reading is valid.",
-        tags
+        tempTags
       ) { status(address)?.temperature?.isValid }
       boolGauge(
         "temperature.overheated",
         "Whether the device is overheated.",
-        tags
+        tempTags
       ) { status(address)?.overTemperature }
 
       boolGauge(
