@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.6.1](https://github.com/easimon/shelly-exporter/compare/2.6.0...2.6.1) (2025-01-20)
+
+
+### Bug Fixes
+
+* refactor code to mitigate invalid smart cast ([#125](https://github.com/easimon/shelly-exporter/issues/125)) ([a5c78a4](https://github.com/easimon/shelly-exporter/commit/a5c78a4308ca04caa616fd08c793f7c5a05153e8))
+* temperature metrics always need a channel ([0627d44](https://github.com/easimon/shelly-exporter/commit/0627d4454970e2166bd9ad70c6048340d707b529))
+
 ## [2.6.0](https://github.com/easimon/shelly-exporter/compare/2.5.9...2.6.0) (2024-12-20)
 
 
