@@ -93,7 +93,7 @@ $ export SHELLY_EXPORTER_IMAGE=ghcr.io/easimon/shelly-exporter:v2.6.1 # x-releas
 $ docker build --tag $SHELLY_EXPORTER_IMAGE .
 ```
 
-Running it
+Running it with `docker run`
 
 ```bash
 $ export SHELLY_EXPORTER_IMAGE=ghcr.io/easimon/shelly-exporter:v2.6.1 # x-release-please-version
@@ -103,6 +103,20 @@ $ docker run \
   -e SHELLY_DEVICES_HOSTS=shelly1.local,192.168.0.5 \
   -p '8080:8080' \
   $SHELLY_EXPORTER_IMAGE
+```
+
+Running it with `docker compose`
+
+```yaml
+services:
+  shelly-exporter:
+    image: ghcr.io/easimon/shelly-exporter:2.6.1 # x-release-please-version
+    environment:
+      SHELLY_AUTH_USERNAME: your_username
+      SHELLY_AUTH_PASSWORD: your_password
+      SHELLY_DEVICES_HOSTS: shelly1.local,192.168.0.5
+    ports:
+      - '8080:8080'
 ```
 
 ### Prometheus scraping config
