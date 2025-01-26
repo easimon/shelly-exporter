@@ -1,7 +1,7 @@
 package click.dobel.shelly.exporter
 
 import click.dobel.shelly.exporter.metrics.ShellyMetrics
-import click.dobel.shelly.exporter.metrics.ValueFilteringPrometheusRegistry
+import click.dobel.shelly.exporter.metrics.prometheus.ValueFilteringPrometheusRegistry
 import io.micrometer.core.instrument.Meter
 import io.micrometer.core.instrument.config.MeterFilter
 import io.micrometer.core.instrument.config.MeterFilterReply
