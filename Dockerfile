@@ -1,9 +1,9 @@
-ARG BUILD_IMAGE=eclipse-temurin:17
-ARG TEST_IMAGE=eclipse-temurin:17
-ARG RUNTIME_IMAGE=eclipse-temurin:17-jre
+ARG BUILD_IMAGE=eclipse-temurin:21
+ARG TEST_IMAGE=eclipse-temurin:21
+ARG RUNTIME_IMAGE=eclipse-temurin:21-jre
 ARG MAVEN_OPTS="-Xmx2000m"
 
-FROM --platform=$BUILDPLATFORM $BUILD_IMAGE as builder
+FROM --platform=$BUILDPLATFORM $BUILD_IMAGE AS builder
 ARG MAVEN_OPTS
 
 WORKDIR /build
@@ -17,7 +17,7 @@ COPY src /build/src
 RUN ./mvnw -DskipTests -B package
 
 # Integration tests
-FROM --platform=$BUILDPLATFORM $TEST_IMAGE as test
+FROM --platform=$BUILDPLATFORM $TEST_IMAGE AS test
 ARG MAVEN_OPTS
 
 WORKDIR /build
