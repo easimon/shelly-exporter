@@ -45,6 +45,7 @@ class ShellyExporterConfiguration {
   fun caffeineConfig(): Caffeine<Any, Any> =
     Caffeine
       .newBuilder()
+      .recordStats()
       .expireAfterWrite(10, TimeUnit.SECONDS)
 
   @Bean
