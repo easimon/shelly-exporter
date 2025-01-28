@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.7.0](https://github.com/easimon/shelly-exporter/compare/2.6.1...2.7.0) (2025-01-28)
+
+
+### Features
+
+* Upgrade to OpenJDK 21 ([5e62fa4](https://github.com/easimon/shelly-exporter/commit/5e62fa4c74b7382b718d9fa0f203707526d15148))
+
+
+### Bug Fixes
+
+* add caffeine stats, mainly to suppress warning ([ed8cc2d](https://github.com/easimon/shelly-exporter/commit/ed8cc2d600a1ea5a241b9409c31ddad3536eb7a9))
+* total power consumption and production must be counters ([d9c8aa8](https://github.com/easimon/shelly-exporter/commit/d9c8aa8c842de8f29058ea186862e1aec92a38da))
+
 ## [2.6.1](https://github.com/easimon/shelly-exporter/compare/2.6.0...2.6.1) (2025-01-20)
 
 
