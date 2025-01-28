@@ -42,6 +42,6 @@ spring:
   profiles:
     include: local
 
-logging:
-  level:
-    click.dobel.shelly.exporter.metrics.prometheus: DEBUG
+#logging:
+#  level:
+#    click.dobel.shelly.exporter.metrics.prometheus: DEBUG
