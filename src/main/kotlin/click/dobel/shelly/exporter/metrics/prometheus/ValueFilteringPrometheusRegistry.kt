@@ -1,11 +1,11 @@
-package click.dobel.shelly.exporter.metrics
+package click.dobel.shelly.exporter.metrics.prometheus
 
+import click.dobel.shelly.exporter.metrics.DoubleValidator
 import io.prometheus.metrics.model.registry.PrometheusRegistry
 import io.prometheus.metrics.model.registry.PrometheusScrapeRequest
 import io.prometheus.metrics.model.snapshots.CounterSnapshot
 import io.prometheus.metrics.model.snapshots.DataPointSnapshot
 import io.prometheus.metrics.model.snapshots.GaugeSnapshot
-import io.prometheus.metrics.model.snapshots.MetricMetadata
 import io.prometheus.metrics.model.snapshots.MetricSnapshot
 import io.prometheus.metrics.model.snapshots.MetricSnapshots
 import mu.KLogging
@@ -28,9 +28,19 @@ class ValueFilteringPrometheusRegistry(
       }
   }
 
-  private fun metricName(metadata: MetricMetadata, dataPointSnapshot: DataPointSnapshot): String {
-    val labels = dataPointSnapshot.labels.joinToString(prefix = "{", postfix = "}") { "${it.name}='${it.value}'" }
-    return "${metadata.name}${labels}"
+  private fun metricName(snapshot: MetricSnapshot, dataPointSnapshot: DataPointSnapshot? = null): String {
+    val className = if (dataPointSnapshot != null) {
+      "${snapshot::class.simpleName}/${dataPointSnapshot::class.simpleName}"
+    } else {
+      snapshot::class.simpleName
+    }
+    val name = snapshot.metadata.name
+    val labels = dataPointSnapshot
+      ?.labels
+      ?.joinToString(prefix = "{", postfix = "}") { "${it.name}='${it.value}'" }
+      ?: ""
+
+    return "$className ${name}${labels}"
   }
 
   override fun scrape(): MetricSnapshots {
@@ -53,8 +63,17 @@ class ValueFilteringPrometheusRegistry(
     val results = MetricSnapshots.builder()
 
     this
-      .map { metricSnapshot -> metricSnapshot.filtered() }
-      .filter { it.dataPoints.isNotEmpty() }
+      .map { metricSnapshot ->
+        logger.debug { "Checking ${metricName(metricSnapshot)} for invalid data points." }
+        metricSnapshot.filtered()
+      }
+      .filterNot { metricSnapshot ->
+        val result = metricSnapshot.dataPoints.isEmpty()
+        if (result) {
+          logger.debug { "Removing empty snapshot ${metricName(metricSnapshot)}." }
+        }
+        result
+      }
       .forEach(results::metricSnapshot)
 
     return results.build()
@@ -69,14 +88,14 @@ class ValueFilteringPrometheusRegistry(
   private fun CounterSnapshot.filtered() = CounterSnapshot(
     this.metadata,
     this.dataPoints.filter { dataPointSnapshot: CounterSnapshot.CounterDataPointSnapshot ->
-      dataPointSnapshot.value.isValid(metricName(this.metadata, dataPointSnapshot))
+      dataPointSnapshot.value.isValid(metricName(this, dataPointSnapshot))
     }
   )
 
   private fun GaugeSnapshot.filtered() = GaugeSnapshot(
     this.metadata,
     this.dataPoints.filter { dataPointSnapshot: GaugeSnapshot.GaugeDataPointSnapshot ->
-      dataPointSnapshot.value.isValid(metricName(this.metadata, dataPointSnapshot))
+      dataPointSnapshot.value.isValid(metricName(this, dataPointSnapshot))
     }
   )
 }

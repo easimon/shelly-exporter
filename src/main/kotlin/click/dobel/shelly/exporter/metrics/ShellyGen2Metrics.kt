@@ -5,14 +5,12 @@ import click.dobel.shelly.exporter.discovery.ShellyDevice
 import io.micrometer.core.instrument.MeterRegistry
 import io.micrometer.core.instrument.Tag
 import mu.KLogging
-import org.springframework.boot.actuate.metrics.startup.StartupTimeMetricsListener
 import org.springframework.stereotype.Component
 
 @Component
 class ShellyGen2Metrics(
   client: ShellyGen2Client,
   meterRegistry: MeterRegistry,
-  private val startupTimeMetrics: StartupTimeMetricsListener,
 ) : ShellyMetrics<ShellyGen2Client>(
   client,
   meterRegistry,
@@ -167,13 +165,13 @@ class ShellyGen2Metrics(
           "amperes",
           switchTags
         ) { status(address)?.switches?.get(index)?.current }
-        gauge(
+        counter(
           "meter.power",
           "Total power consumption in watt-hours.",
           "watthours",
           switchTags
         ) { status(address)?.switches?.get(index)?.energy?.total }
-        gauge(
+        counter(
           "meter.power.returned",
           "Total power production in watt-hours (returned to the grid).",
           "watthours",
