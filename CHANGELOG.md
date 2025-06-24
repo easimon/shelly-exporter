@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.7.1](https://github.com/easimon/shelly-exporter/compare/2.7.0...2.7.1) (2025-06-24)
+
+
+### Bug Fixes
+
+* support null values in the name property of Gen2ShellyDeviceInfo ([79d3790](https://github.com/easimon/shelly-exporter/commit/79d37903f88bed5ab7003e6182f79d727c77dd23))
+* support null values in the name property of Gen2ShellyDeviceInfo ([26e641f](https://github.com/easimon/shelly-exporter/commit/26e641f78ad5cd09c15fcdc6feb578a1a334887c))
+
 ## [2.7.0](https://github.com/easimon/shelly-exporter/compare/2.6.1...2.7.0) (2025-01-28)
 
 
