@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 
 data class Gen2ShellyDeviceInfo(
   @JsonProperty("name")
-  val name: String,
+  val name: String?,
   @JsonProperty("id")
   val id: String,
   @JsonProperty("mac")

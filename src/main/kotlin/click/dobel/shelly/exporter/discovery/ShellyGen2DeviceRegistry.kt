@@ -27,7 +27,7 @@ class ShellyGen2DeviceRegistry(
       ShellyDevice(
         mac = mac,
         address = address,
-        name = name.trim(),
+        name = name?.trim() ?: "",
         type = this.model,
         firmwareVersion = firmwareId
       )
