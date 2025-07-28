@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.8.0](https://github.com/easimon/shelly-exporter/compare/2.7.1...2.8.0) (2025-07-28)
+
+
+### Features
+
+* Add support for Shelly Pro EM 50 ([f170bb0](https://github.com/easimon/shelly-exporter/commit/f170bb0e10bb2b6cf867f13285f4c8fc6d71eb9b))
+
 ## [2.7.1](https://github.com/easimon/shelly-exporter/compare/2.7.0...2.7.1) (2025-06-24)
 
 
