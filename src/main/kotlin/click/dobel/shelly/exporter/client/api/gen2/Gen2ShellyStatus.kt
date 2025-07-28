@@ -15,6 +15,16 @@ class Gen2ShellyStatus(
   @JsonProperty("emdata:0")
   val emData: Gen2EmData?,
 
+  @JsonProperty("em1:0")
+  val em1Status0: Gen2Em1Status?,
+  @JsonProperty("em1data:0")
+  val em1Data0: Gen2Em1Data?,
+
+  @JsonProperty("em1:1")
+  val em1Status1: Gen2Em1Status?,
+  @JsonProperty("em1data:1")
+  val em1Data1: Gen2Em1Data?,
+
   @JsonProperty("input:0")
   val input0: Gen2Input?,
   @JsonProperty("switch:0")
@@ -40,6 +50,8 @@ class Gen2ShellyStatus(
   val phaseData = emData?.phases
 
   val switches = mapOf(0 to switch0).filterValues { it != null }
+  val em1Statuses = mapOf("em0" to em1Status0, "em1" to em1Status1).filterValues { it != null }
+  val em1Datas = mapOf("em0" to em1Data0, "em1" to em1Data1).filterValues { it != null }
 }
 
 data class Cloud(

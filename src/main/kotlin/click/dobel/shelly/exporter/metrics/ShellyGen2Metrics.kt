@@ -244,6 +244,60 @@ class ShellyGen2Metrics(
           meterTags
         ) { status(address)?.phaseStatus?.get(index)?.powerFactor }
       }
+
+      // Meters, e.g. Shelly Pro EM 50
+      for (index in client.status(address)?.em1Statuses?.keys ?: emptySet()) {
+        val meterTags = tags.and(Tag.of(TAGNAME_CHANNEL, index.toString()))
+
+        counter(
+          "meter.power",
+          "Total power consumption in watt-hours.",
+          "watthours",
+          meterTags
+        ) { status(address)?.em1Datas?.get(index)?.totalActualEnergy }
+        counter(
+          "meter.power.returned",
+          "Total power production in watt-hours (returned to the grid).",
+          "watthours",
+          meterTags
+        ) { status(address)?.em1Datas?.get(index)?.totalActualReturnedEnergy }
+        gauge(
+          "meter.power.current",
+          "Momentary power consumption in watts.",
+          "watts",
+          meterTags
+        ) { status(address)?.em1Statuses?.get(index)?.actualPower }
+        gauge(
+          "meter.power.apparent",
+          "Momentary apparent power consumption in watts.",
+          "watts",
+          meterTags
+        ) { status(address)?.em1Statuses?.get(index)?.apparentPower }
+        gauge(
+          "meter.voltage.current",
+          "Momentary voltage in volts.",
+          "volts",
+          meterTags
+        ) { status(address)?.em1Statuses?.get(index)?.voltage }
+        gauge(
+          "meter.current.current",
+          "Momentary current in ampers.",
+          "ampers",
+          meterTags
+        ) { status(address)?.em1Statuses?.get(index)?.current }
+        gauge(
+          "meter.frequency",
+          "Momentary frequency in Hz.",
+          "Hz",
+          meterTags
+        ) { status(address)?.em1Statuses?.get(index)?.frequency }
+        gauge(
+          "meter.powerfactor",
+          "Momentary power factor.",
+          "",
+          meterTags
+        ) { status(address)?.em1Statuses?.get(index)?.powerFactor }
+      }
     }
   }
 }
