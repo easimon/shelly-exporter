@@ -3,7 +3,7 @@ package click.dobel.shelly.exporter.discovery
 import click.dobel.shelly.exporter.client.ShellyGen2Client
 import click.dobel.shelly.exporter.config.ShellyConfigProperties
 import click.dobel.shelly.exporter.metrics.ShellyGen2Metrics
-import mu.KLogging
+import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
@@ -18,9 +18,11 @@ class ShellyGen2DeviceRegistry(
   configProperties.gen2devices,
   metrics,
   resolver,
-  Companion
+  logger
 ) {
-  companion object : KLogging()
+  companion object {
+    private val logger = KotlinLogging.logger { }
+  }
 
   override fun addressToDevice(address: String): ShellyDevice? {
     return shellyClient.deviceInfo(address)?.run {

@@ -1,10 +1,11 @@
 package click.dobel.shelly.exporter.client
 
-import mu.KLoggable
+import io.github.oshai.kotlinlogging.KLogger
 import org.springframework.web.client.RestTemplate
+import  org.springframework.web.client.getForObject
 
 abstract class ShellyClient(
-  loggable: KLoggable
+  protected val logger: KLogger
 ) {
 
   companion object {
@@ -12,7 +13,6 @@ abstract class ShellyClient(
   }
 
   protected abstract val restTemplate: RestTemplate
-  protected val logger = loggable.logger
 
   protected inline fun <reified T : Any> get(
     address: String,
@@ -24,8 +24,8 @@ abstract class ShellyClient(
         restTemplate.getForObject<T>(url)
       }
     }.getOrElse { ex ->
-      logger.warn { "GET ${url}: HTTP Request failure: ${ex.message}" }
-      logger.trace(ex) { "Stack trace:" }
+      this@ShellyClient.logger.warn { "GET ${url}: HTTP Request failure: ${ex.message}" }
+      this@ShellyClient.logger.trace(ex) { "Stack trace:" }
       null
     }
   }

@@ -2,9 +2,9 @@ package click.dobel.shelly.exporter.metrics
 
 import click.dobel.shelly.exporter.client.ShellyGen1Client
 import click.dobel.shelly.exporter.discovery.ShellyDevice
+import io.github.oshai.kotlinlogging.KotlinLogging
 import io.micrometer.core.instrument.MeterRegistry
 import io.micrometer.core.instrument.Tag
-import mu.KLogging
 import org.springframework.stereotype.Component
 
 @Component
@@ -14,9 +14,11 @@ class ShellyGen1Metrics(
 ) : ShellyMetrics<ShellyGen1Client>(
   client,
   meterRegistry,
-  Companion
+  logger
 ) {
-  companion object : KLogging()
+  companion object {
+    private val logger = KotlinLogging.logger { }
+  }
 
   @Suppress("LongMethod")
   override fun register(device: ShellyDevice) {

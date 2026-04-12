@@ -1,11 +1,11 @@
 package click.dobel.shelly.exporter.client.api.gen1
 
 import click.dobel.shelly.exporter.test.IntegrationTest
-import com.fasterxml.jackson.databind.ObjectMapper
 import io.kotest.assertions.throwables.shouldNotThrowAny
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 import org.springframework.beans.factory.annotation.Autowired
+import tools.jackson.databind.ObjectMapper
 
 @IntegrationTest
 class StatusDeserializationIntegrationTest(

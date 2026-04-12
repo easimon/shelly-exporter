@@ -34,7 +34,7 @@ class ValueFilteringPrometheusRegistryIntegrationTest(
 
   val restTemplate = RestTemplate()
   fun getMetrics() = restTemplate
-    .getForObject<String?>("http://localhost:$port/prometheus")
+    .getForObject<String>("http://localhost:$port/prometheus")
     ?.trim()
     ?.lines()
     ?.filterNot { it.startsWith("#") }

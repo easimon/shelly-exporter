@@ -2,16 +2,15 @@ package click.dobel.shelly.exporter.discovery
 
 import click.dobel.shelly.exporter.config.ShellyConfigProperties
 import click.dobel.shelly.exporter.metrics.ShellyMetrics
-import mu.KLoggable
+import io.github.oshai.kotlinlogging.KLogger
 import java.net.Inet4Address
 
 abstract class ShellyDeviceRegistry(
   private val devicesConfig: ShellyConfigProperties.Devices,
   private val metrics: ShellyMetrics<*>,
   private val resolver: AddressResolver,
-  logging: KLoggable,
+  private val logger: KLogger,
 ) {
-  private val logger = logging.logger
 
   private val devices: MutableSet<ShellyDevice> = mutableSetOf()
 

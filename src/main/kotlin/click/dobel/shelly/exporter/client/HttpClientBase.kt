@@ -9,7 +9,7 @@ import org.apache.hc.core5.http.io.SocketConfig
 import org.apache.hc.core5.pool.PoolConcurrencyPolicy
 import org.apache.hc.core5.util.TimeValue
 import org.apache.hc.core5.util.Timeout
-import org.springframework.boot.web.client.RestTemplateBuilder
+import org.springframework.boot.restclient.RestTemplateBuilder
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory
 import org.springframework.web.client.RestTemplate
 
@@ -60,6 +60,14 @@ private fun httpClient(
   .disableRedirectHandling()
   .disableAuthCaching()
   .disableConnectionState()
+  /* retried externally
+  .setRetryStrategy(
+    DefaultHttpRequestRetryStrategy(
+      3,
+      TimeValue.of(500.milliseconds.toJavaDuration())
+    )
+  )
+   */
   .setConnectionReuseStrategy { _, _, _ -> false }
   .setConnectionManager(
     PoolingHttpClientConnectionManagerBuilder.create()

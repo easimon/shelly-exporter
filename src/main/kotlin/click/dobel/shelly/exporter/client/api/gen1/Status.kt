@@ -14,7 +14,7 @@ data class Status(
   @param:JsonProperty("ram_free")
   val ramFree: Long,
   @param:JsonProperty("ram_lwm")
-  val ramLowWaterMark: Long,
+  val ramLowWaterMark: Long?,
 
   @param:JsonProperty("fs_size")
   val fileSystemSize: Long,
