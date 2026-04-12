@@ -3,24 +3,24 @@ package click.dobel.shelly.exporter.client.api.gen2
 import com.fasterxml.jackson.annotation.JsonProperty
 
 data class Gen2ShellyDeviceInfo(
-  @JsonProperty("name")
+  @param:JsonProperty("name")
   val name: String?,
-  @JsonProperty("id")
+  @param:JsonProperty("id")
   val id: String,
-  @JsonProperty("mac")
+  @param:JsonProperty("mac")
   val mac: String,
-  @JsonProperty("model")
+  @param:JsonProperty("model")
   val model: String,
-  @JsonProperty("gen")
+  @param:JsonProperty("gen")
   val gen: Int,
-  @JsonProperty("fw_id")
+  @param:JsonProperty("fw_id")
   val firmwareId: String,
-  @JsonProperty("ver")
+  @param:JsonProperty("ver")
   val version: String,
-  @JsonProperty("app")
+  @param:JsonProperty("app")
   val app: String,
-  @JsonProperty("auth_en")
+  @param:JsonProperty("auth_en")
   val authEnabled: Boolean,
-  @JsonProperty("auth_domain")
+  @param:JsonProperty("auth_domain")
   val authDomain: String?,
 )

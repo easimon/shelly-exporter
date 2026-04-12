@@ -29,7 +29,7 @@ data class ShellyConfigProperties(
 
   data class HttpParams(
     val connectTimeout: Duration = 5.seconds.toJavaDuration(),
-    val requestTimeout: Duration = 5.seconds.toJavaDuration(),
+    val socketTimeout: Duration = 5.seconds.toJavaDuration(),
     val validationPeriod: Duration = 500.milliseconds.toJavaDuration(),
     val timeToLive: Duration = 5.seconds.toJavaDuration(),
     val maxConnectionsTotal: Int = 200,

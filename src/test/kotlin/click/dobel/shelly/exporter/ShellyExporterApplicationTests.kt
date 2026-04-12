@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired
 
 @IntegrationTest
 class ShellyExporterApplicationTests(
-  @Autowired val configProperties: ShellyConfigProperties
+  @param:Autowired val configProperties: ShellyConfigProperties
 ) {
 
   @Test

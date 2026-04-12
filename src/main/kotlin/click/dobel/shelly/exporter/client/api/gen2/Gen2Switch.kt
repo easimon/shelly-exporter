@@ -3,27 +3,27 @@ package click.dobel.shelly.exporter.client.api.gen2
 import com.fasterxml.jackson.annotation.JsonProperty
 
 data class Gen2Switch(
-  @JsonProperty("id")
+  @param:JsonProperty("id")
   val id: Int,
-  @JsonProperty("source")
+  @param:JsonProperty("source")
   val source: String, /* always "init"? */
-  @JsonProperty("output")
+  @param:JsonProperty("output")
   val outputEnabled: Boolean,
-  @JsonProperty("apower")
+  @param:JsonProperty("apower")
   val power: Double?,
-  @JsonProperty("voltage")
+  @param:JsonProperty("voltage")
   val voltage: Double?,
-  @JsonProperty("current")
+  @param:JsonProperty("current")
   val current: Double?,
-  @JsonProperty("aenergy")
+  @param:JsonProperty("aenergy")
   val energy: Energy?,
-  @JsonProperty("ret_aenergy")
+  @param:JsonProperty("ret_aenergy")
   val returnedEnergy: Energy?,
-  @JsonProperty("pf")
+  @param:JsonProperty("pf")
   val powerFactor: Double?,
-  @JsonProperty("freq")
+  @param:JsonProperty("freq")
   val frequency: Double?,
-  @JsonProperty("temperature")
+  @param:JsonProperty("temperature")
   val temperature: Temperature?
 ) {
 

@@ -4,27 +4,27 @@ import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonProperty
 
 data class Gen2EmData(
-  @JsonProperty("id")
+  @param:JsonProperty("id")
   val id: Int,
 
-  @JsonProperty("a_total_act_energy")
+  @param:JsonProperty("a_total_act_energy")
   val phaseATotalActualEnergy: Double?,
-  @JsonProperty("a_total_act_ret_energy")
+  @param:JsonProperty("a_total_act_ret_energy")
   val phaseATotalActualReturnedEnergy: Double?,
 
-  @JsonProperty("b_total_act_energy")
+  @param:JsonProperty("b_total_act_energy")
   val phaseBTotalActualEnergy: Double?,
-  @JsonProperty("b_total_act_ret_energy")
+  @param:JsonProperty("b_total_act_ret_energy")
   val phaseBTotalActualReturnedEnergy: Double?,
 
-  @JsonProperty("c_total_act_energy")
+  @param:JsonProperty("c_total_act_energy")
   val phaseCTotalActualEnergy: Double?,
-  @JsonProperty("c_total_act_ret_energy")
+  @param:JsonProperty("c_total_act_ret_energy")
   val phaseCTotalActualReturnedEnergy: Double?,
 
-  @JsonProperty("total_act")
+  @param:JsonProperty("total_act")
   val grandTotalActualEnergy: Double?,
-  @JsonProperty("total_act_ret")
+  @param:JsonProperty("total_act_ret")
   val grandTotalActualReturnedEnergy: Double?,
 ) {
   @JsonIgnore

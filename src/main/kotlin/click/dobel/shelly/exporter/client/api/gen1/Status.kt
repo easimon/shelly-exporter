@@ -4,77 +4,77 @@ import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonProperty
 
 data class Status(
-  @JsonProperty("relays")
+  @param:JsonProperty("relays")
   val relays: List<Relay>,
-  @JsonProperty("meters")
+  @param:JsonProperty("meters")
   val meters: List<Meter>,
 
-  @JsonProperty("ram_total")
+  @param:JsonProperty("ram_total")
   val ramTotal: Long,
-  @JsonProperty("ram_free")
+  @param:JsonProperty("ram_free")
   val ramFree: Long,
-  @JsonProperty("ram_lwm")
-  val ramLowWaterMark: Long,
+  @param:JsonProperty("ram_lwm")
+  val ramLowWaterMark: Long?,
 
-  @JsonProperty("fs_size")
+  @param:JsonProperty("fs_size")
   val fileSystemSize: Long,
-  @JsonProperty("fs_free")
+  @param:JsonProperty("fs_free")
   val fileSystemFree: Long,
-  @JsonProperty("uptime")
+  @param:JsonProperty("uptime")
   val uptime: Long,
 
-  @JsonProperty("update")
+  @param:JsonProperty("update")
   val update: Update,
 
-  @JsonProperty("wifi_sta")
+  @param:JsonProperty("wifi_sta")
   val wifiSta: WifiSta,
 
-  @JsonProperty("mqtt")
+  @param:JsonProperty("mqtt")
   val mqtt: Mqtt,
 
-  @JsonProperty("cloud")
+  @param:JsonProperty("cloud")
   val cloud: Cloud,
 
   // Following properties available on Plug S only
   // val temperature: Double?,
-  @JsonProperty("overtemperature")
+  @param:JsonProperty("overtemperature")
   val overTemperature: Boolean?,
-  @JsonProperty("tmp")
+  @param:JsonProperty("tmp")
   val temperature: Temperature?,
 ) {
 
   data class Relay(
-    @JsonProperty("ison")
+    @param:JsonProperty("ison")
     val isOn: Boolean,
-    @JsonProperty("has_timer")
+    @param:JsonProperty("has_timer")
     val hasTimer: Boolean,
-    @JsonProperty("timer_started")
+    @param:JsonProperty("timer_started")
     val timerStarted: Long,
-    @JsonProperty("timer_duration")
+    @param:JsonProperty("timer_duration")
     val timerDuration: Long,
-    @JsonProperty("timer_remaining")
+    @param:JsonProperty("timer_remaining")
     val timerRemaining: Long,
-    @JsonProperty("overpower")
+    @param:JsonProperty("overpower")
     val overpower: Boolean?,
-    @JsonProperty("source")
+    @param:JsonProperty("source")
     val source: String,
   )
 
   data class Meter(
-    @JsonProperty("power")
+    @param:JsonProperty("power")
     val power: Double,
-    @JsonProperty("overpower")
+    @param:JsonProperty("overpower")
     val overpower: Double?,
-    @JsonProperty("is_valid")
+    @param:JsonProperty("is_valid")
     val isValid: Boolean,
-    @JsonProperty("timestamp")
+    @param:JsonProperty("timestamp")
     val timestamp: Long?,
-    @JsonProperty("counters")
+    @param:JsonProperty("counters")
     val counters: List<Double> = emptyList(),
     /**
      * total consumption in watt-minutes.
      */
-    @JsonProperty("total")
+    @param:JsonProperty("total")
     val wattMinutesTotal: Double = 0.0,
   ) {
     @get:JsonIgnore
@@ -86,41 +86,41 @@ data class Status(
   }
 
   data class Temperature(
-    @JsonProperty("tC")
+    @param:JsonProperty("tC")
     val celsius: Double,
-    @JsonProperty("tF")
+    @param:JsonProperty("tF")
     val fahrenheit: Double,
-    @JsonProperty("is_valid")
+    @param:JsonProperty("is_valid")
     val isValid: Boolean,
   )
 
   data class Update(
-    @JsonProperty("status")
+    @param:JsonProperty("status")
     val status: String,
-    @JsonProperty("has_update")
+    @param:JsonProperty("has_update")
     val hasUpdate: Boolean,
   )
 
   data class WifiSta(
-    @JsonProperty("connected")
+    @param:JsonProperty("connected")
     val isConnected: Boolean,
-    @JsonProperty("ssid")
+    @param:JsonProperty("ssid")
     val ssid: String,
-    @JsonProperty("ip")
+    @param:JsonProperty("ip")
     val ip: String,
-    @JsonProperty("rssi")
+    @param:JsonProperty("rssi")
     val rssi: Int,
   )
 
   data class Mqtt(
-    @JsonProperty("connected")
+    @param:JsonProperty("connected")
     val isConnected: Boolean,
   )
 
   data class Cloud(
-    @JsonProperty("enabled")
+    @param:JsonProperty("enabled")
     val isEnabled: Boolean,
-    @JsonProperty("connected")
+    @param:JsonProperty("connected")
     val isConnected: Boolean,
   )
 }

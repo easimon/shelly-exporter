@@ -2,9 +2,9 @@ package click.dobel.shelly.exporter.metrics
 
 import click.dobel.shelly.exporter.client.ShellyGen2Client
 import click.dobel.shelly.exporter.discovery.ShellyDevice
+import io.github.oshai.kotlinlogging.KotlinLogging
 import io.micrometer.core.instrument.MeterRegistry
 import io.micrometer.core.instrument.Tag
-import mu.KLogging
 import org.springframework.stereotype.Component
 
 @Component
@@ -14,10 +14,13 @@ class ShellyGen2Metrics(
 ) : ShellyMetrics<ShellyGen2Client>(
   client,
   meterRegistry,
-  Companion
+  logger
 ) {
-  companion object : KLogging()
+  companion object {
+    private val logger = KotlinLogging.logger { }
+  }
 
+  @Suppress("LongMethod")
   override fun register(device: ShellyDevice) {
     logger.info { "Registering ${device}." }
     with(device) {
@@ -63,6 +66,18 @@ class ShellyGen2Metrics(
         "Whether Shelly is connected to MQTT server.",
         tags
       ) { status(address)?.mqtt?.isConnected }
+
+      boolGauge(
+        "matter.commissionable",
+        "Whether the device can be joined to an existing Matter fabric.",
+        tags
+      ) { status(address)?.matter?.isCommissionable }
+      gauge(
+        "matter.fabrics",
+        "The number of Matter fabrics that the device has joined.",
+        "count",
+        tags
+      ) { status(address)?.matter?.numFabrics }
 
       gauge(
         "location.latitude",
@@ -124,11 +139,17 @@ class ShellyGen2Metrics(
         tags
       ) { status(address)?.sys?.ramFree }
       gauge(
+        "memory.free.min",
+        "Minimum free memory size in bytes.",
+        "bytes",
+        tags
+      ) { status(address)?.sys?.ramMinFree }
+      gauge(
         "memory.size",
         "Total memory size in bytes.",
         "bytes",
         tags
-      ) { status(address)?.sys?.ramFree }
+      ) { status(address)?.sys?.ramTotal }
 
       // Shelly Plus 1PM
       val inputTags = tags.and(Tag.of(TAGNAME_CHANNEL, 0.toString()))

@@ -1,6 +1,6 @@
 package click.dobel.shelly.exporter.discovery
 
-import mu.KLogging
+import io.github.oshai.kotlinlogging.KotlinLogging
 import java.net.InetAddress
 import java.net.UnknownHostException
 
@@ -8,7 +8,9 @@ fun interface AddressResolver {
   fun resolveToAddresses(name: String): List<InetAddress>
 }
 
-object DefaultAddressResolver : AddressResolver, KLogging() {
+object DefaultAddressResolver : AddressResolver {
+
+  private val logger = KotlinLogging.logger { }
 
   override fun resolveToAddresses(name: String): List<InetAddress> {
     return try {

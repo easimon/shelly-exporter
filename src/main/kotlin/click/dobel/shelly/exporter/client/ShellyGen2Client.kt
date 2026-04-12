@@ -4,18 +4,19 @@ import click.dobel.shelly.exporter.client.api.gen2.Gen2ShellyConfig
 import click.dobel.shelly.exporter.client.api.gen2.Gen2ShellyDeviceInfo
 import click.dobel.shelly.exporter.client.api.gen2.Gen2ShellyStatus
 import click.dobel.shelly.exporter.config.ShellyConfigProperties
-import mu.KLogging
-import org.springframework.boot.web.client.RestTemplateBuilder
+import io.github.oshai.kotlinlogging.KotlinLogging
+import org.springframework.boot.restclient.RestTemplateBuilder
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Component
-
 
 @Component
 class ShellyGen2Client(
   configProperties: ShellyConfigProperties,
   restTemplateBuilder: RestTemplateBuilder
-) : ShellyClient(this) {
-  companion object : KLogging()
+) : ShellyClient(logger) {
+  companion object {
+    private val logger = KotlinLogging.logger { }
+  }
 
   @Cacheable("Gen2ShellyStatus", sync = true)
   fun status(address: String) = get<Gen2ShellyStatus>(address, "rpc/Shelly.GetStatus")

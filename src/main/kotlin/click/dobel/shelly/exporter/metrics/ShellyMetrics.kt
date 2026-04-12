@@ -3,17 +3,18 @@ package click.dobel.shelly.exporter.metrics
 import click.dobel.shelly.exporter.ShellyExporterMetricsConfiguration
 import click.dobel.shelly.exporter.client.ShellyClient
 import click.dobel.shelly.exporter.discovery.ShellyDevice
+import io.github.oshai.kotlinlogging.KLogger
 import io.micrometer.core.instrument.FunctionCounter
 import io.micrometer.core.instrument.Gauge
 import io.micrometer.core.instrument.MeterRegistry
 import io.micrometer.core.instrument.Tag
 import io.micrometer.core.instrument.Tags
-import mu.KLoggable
 
+@Suppress("TooManyFunctions")
 abstract class ShellyMetrics<T : ShellyClient>(
   val client: T,
   val meterRegistry: MeterRegistry,
-  loggable: KLoggable
+  private val logger: KLogger
 ) {
   companion object {
     const val PREFIX = "shelly."
@@ -21,8 +22,6 @@ abstract class ShellyMetrics<T : ShellyClient>(
 
     fun pre(s: String) = "${PREFIX}$s"
   }
-
-  private val logger = loggable.logger
 
   fun register(devices: Collection<ShellyDevice>) {
     devices.forEach(::register)

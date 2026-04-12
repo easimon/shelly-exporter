@@ -3,7 +3,7 @@ package click.dobel.shelly.exporter.discovery
 import click.dobel.shelly.exporter.client.ShellyGen1Client
 import click.dobel.shelly.exporter.config.ShellyConfigProperties
 import click.dobel.shelly.exporter.metrics.ShellyGen1Metrics
-import mu.KLogging
+import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
@@ -13,14 +13,16 @@ class ShellyGen1DeviceRegistry(
   configProperties: ShellyConfigProperties,
   private val shellyClient: ShellyGen1Client,
   metrics: ShellyGen1Metrics,
-  @Autowired(required = false) private val resolver: AddressResolver = DefaultAddressResolver
+  @param:Autowired(required = false) private val resolver: AddressResolver = DefaultAddressResolver
 ) : ShellyDeviceRegistry(
   configProperties.devices,
   metrics,
   resolver,
-  Companion
+  logger
 ) {
-  companion object : KLogging()
+  companion object {
+    private val logger = KotlinLogging.logger { }
+  }
 
   override fun addressToDevice(address: String): ShellyDevice? {
     return shellyClient.settings(address)?.run {
@@ -34,7 +36,7 @@ class ShellyGen1DeviceRegistry(
     }
   }
 
-  @Scheduled(fixedRateString = "\${shelly.devices.discovery-interval:PT1M}")
+  @Scheduled(fixedRateString = $$"${shelly.devices.discovery-interval:PT1M}")
   override fun updateAddresses() {
     super.updateAddresses()
   }

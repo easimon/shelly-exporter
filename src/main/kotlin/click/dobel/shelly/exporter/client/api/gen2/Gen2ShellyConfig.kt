@@ -4,44 +4,44 @@ import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonProperty
 
 data class Gen2ShellyConfig(
-  @JsonProperty("cloud")
+  @param:JsonProperty("cloud")
   val cloud: CloudConfig?,
-  @JsonProperty("sys")
+  @param:JsonProperty("sys")
   val sys: SysConfig?,
-  @JsonProperty("wifi")
+  @param:JsonProperty("wifi")
   val wifi: WifiConfig?,
 )
 
 data class CloudConfig(
-  @JsonProperty("enable")
+  @param:JsonProperty("enable")
   val isEnabled: Boolean,
-  @JsonProperty("server")
+  @param:JsonProperty("server")
   val server: String?,
 )
 
 data class SysConfig(
-  @JsonProperty("location")
+  @param:JsonProperty("location")
   val location: ShellyLocation?,
 )
 
 data class ShellyLocation(
-  @JsonProperty("tz")
+  @param:JsonProperty("tz")
   val tz: String?,
-  @JsonProperty("lat")
+  @param:JsonProperty("lat")
   val lat: Double?,
-  @JsonProperty("lon")
+  @param:JsonProperty("lon")
   val lng: Double?
 )
 
 data class WifiConfig(
-  @JsonProperty("roam")
+  @param:JsonProperty("roam")
   val roam: WifiRoamConfig?,
 )
 
 data class WifiRoamConfig(
-  @JsonProperty("rssi_thr")
+  @param:JsonProperty("rssi_thr")
   val rssiThreshold: Int,
-  @JsonProperty("interval")
+  @param:JsonProperty("interval")
   val interval: Int,
 ) {
   @JsonIgnore

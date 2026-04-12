@@ -1,6 +1,7 @@
 package click.dobel.shelly.exporter.metrics.prometheus
 
 import click.dobel.shelly.exporter.metrics.DoubleValidator
+import io.github.oshai.kotlinlogging.KotlinLogging
 import io.prometheus.metrics.model.registry.PrometheusRegistry
 import io.prometheus.metrics.model.registry.PrometheusScrapeRequest
 import io.prometheus.metrics.model.snapshots.CounterSnapshot
@@ -8,16 +9,14 @@ import io.prometheus.metrics.model.snapshots.DataPointSnapshot
 import io.prometheus.metrics.model.snapshots.GaugeSnapshot
 import io.prometheus.metrics.model.snapshots.MetricSnapshot
 import io.prometheus.metrics.model.snapshots.MetricSnapshots
-import mu.KLogging
 import java.util.function.Predicate
 
 class ValueFilteringPrometheusRegistry(
   invalidValue: Double,
 ) : PrometheusRegistry() {
 
+  private val logger = KotlinLogging.logger { }
   private val doubleValidator = DoubleValidator(invalidValue)
-
-  companion object : KLogging()
 
   private fun Double.isValid(metricName: String): Boolean {
     return doubleValidator.isValid(this)
