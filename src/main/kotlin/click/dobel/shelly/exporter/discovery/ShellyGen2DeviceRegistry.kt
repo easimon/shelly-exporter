@@ -13,7 +13,7 @@ class ShellyGen2DeviceRegistry(
   configProperties: ShellyConfigProperties,
   private val shellyClient: ShellyGen2Client,
   metrics: ShellyGen2Metrics,
-  @Autowired(required = false) private val resolver: AddressResolver = DefaultAddressResolver
+  @param:Autowired(required = false) private val resolver: AddressResolver = DefaultAddressResolver
 ) : ShellyDeviceRegistry(
   configProperties.gen2devices,
   metrics,
@@ -34,7 +34,7 @@ class ShellyGen2DeviceRegistry(
     }
   }
 
-  @Scheduled(fixedRateString = "\${shelly.gen2devices.discovery-interval:PT1M}")
+  @Scheduled(fixedRateString = $$"${shelly.gen2devices.discovery-interval:PT1M}")
   override fun updateAddresses() {
     super.updateAddresses()
   }

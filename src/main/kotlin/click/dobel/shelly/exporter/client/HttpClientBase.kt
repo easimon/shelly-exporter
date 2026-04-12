@@ -13,6 +13,7 @@ import org.springframework.boot.web.client.RestTemplateBuilder
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory
 import org.springframework.web.client.RestTemplate
 
+@Suppress("HttpUrlsUsage")
 fun url(
   address: String,
   path: String

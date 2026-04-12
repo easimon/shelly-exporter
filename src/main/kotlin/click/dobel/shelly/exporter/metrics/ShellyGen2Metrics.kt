@@ -18,6 +18,7 @@ class ShellyGen2Metrics(
 ) {
   companion object : KLogging()
 
+  @Suppress("LongMethod")
   override fun register(device: ShellyDevice) {
     logger.info { "Registering ${device}." }
     with(device) {

@@ -5,44 +5,44 @@ import java.util.EnumSet
 
 @Suppress("LongParameterList")
 class Gen2ShellyStatus(
-  //@JsonProperty("ble")
+  //@param:JsonProperty("ble")
 
-  @JsonProperty("cloud")
+  @param:JsonProperty("cloud")
   val cloud: Cloud?,
 
-  @JsonProperty("em:0")
+  @param:JsonProperty("em:0")
   val emStatus: Gen2EmStatus?,
-  @JsonProperty("emdata:0")
+  @param:JsonProperty("emdata:0")
   val emData: Gen2EmData?,
 
-  @JsonProperty("em1:0")
+  @param:JsonProperty("em1:0")
   val em1Status0: Gen2Em1Status?,
-  @JsonProperty("em1data:0")
+  @param:JsonProperty("em1data:0")
   val em1Data0: Gen2Em1Data?,
 
-  @JsonProperty("em1:1")
+  @param:JsonProperty("em1:1")
   val em1Status1: Gen2Em1Status?,
-  @JsonProperty("em1data:1")
+  @param:JsonProperty("em1data:1")
   val em1Data1: Gen2Em1Data?,
 
-  @JsonProperty("input:0")
+  @param:JsonProperty("input:0")
   val input0: Gen2Input?,
-  @JsonProperty("switch:0")
+  @param:JsonProperty("switch:0")
   val switch0: Gen2Switch?,
 
-  //@JsonProperty("eth")
-  //@JsonProperty("modbus")
+  //@param:JsonProperty("eth")
+  //@param:JsonProperty("modbus")
 
-  @JsonProperty("mqtt")
+  @param:JsonProperty("mqtt")
   val mqtt: Mqtt?,
 
-  @JsonProperty("sys")
+  @param:JsonProperty("sys")
   val sys: SysStatus?,
 
-  @JsonProperty("temperature:0")
+  @param:JsonProperty("temperature:0")
   val temperature: Temperature?,
 
-  @JsonProperty("wifi")
+  @param:JsonProperty("wifi")
   val wifi: WifiStatus?,
 ) {
   val phaseNames: Set<Gen2PhaseNames> = EnumSet.allOf(Gen2PhaseNames::class.java)
@@ -55,67 +55,67 @@ class Gen2ShellyStatus(
 }
 
 data class Cloud(
-  @JsonProperty("connected")
+  @param:JsonProperty("connected")
   val isConnected: Boolean,
 )
 
 data class Mqtt(
-  @JsonProperty("connected")
+  @param:JsonProperty("connected")
   val isConnected: Boolean,
 )
 
 data class SysStatus(
-  @JsonProperty("mac")
+  @param:JsonProperty("mac")
   val mac: String,
-  @JsonProperty("restart_required")
+  @param:JsonProperty("restart_required")
   val isRestartRequired: String,
-  @JsonProperty("time")
+  @param:JsonProperty("time")
   val time: String,
-  @JsonProperty("unixtime")
+  @param:JsonProperty("unixtime")
   val unixTime: Long,
-  @JsonProperty("uptime")
+  @param:JsonProperty("uptime")
   val uptime: Long,
 
-  @JsonProperty("ram_size")
+  @param:JsonProperty("ram_size")
   val ramTotal: Long,
-  @JsonProperty("ram_free")
+  @param:JsonProperty("ram_free")
   val ramFree: Long,
 
-  @JsonProperty("fs_size")
+  @param:JsonProperty("fs_size")
   val fsTotal: Long,
-  @JsonProperty("fs_free")
+  @param:JsonProperty("fs_free")
   val fsFree: Long,
 
-  @JsonProperty("available_updates")
+  @param:JsonProperty("available_updates")
   val availableUpdates: AvailableUpdates
 )
 
 data class AvailableUpdates(
-  @JsonProperty("beta")
+  @param:JsonProperty("beta")
   val beta: AvailableUpdate?,
-  @JsonProperty("stable")
+  @param:JsonProperty("stable")
   val stable: AvailableUpdate?,
 )
 
 data class AvailableUpdate(
-  @JsonProperty("version")
+  @param:JsonProperty("version")
   val version: String,
 )
 
 data class Temperature(
-  @JsonProperty("tC")
+  @param:JsonProperty("tC")
   val celsius: Double,
-  @JsonProperty("tF")
+  @param:JsonProperty("tF")
   val fahrenheit: Double,
 )
 
 data class WifiStatus(
-  @JsonProperty("sta_ip")
+  @param:JsonProperty("sta_ip")
   val ip: String?,
-  @JsonProperty("status")
+  @param:JsonProperty("status")
   val status: String,
-  @JsonProperty("ssid")
+  @param:JsonProperty("ssid")
   val ssid: String?,
-  @JsonProperty("rssi")
+  @param:JsonProperty("rssi")
   val rssi: Int,
 )

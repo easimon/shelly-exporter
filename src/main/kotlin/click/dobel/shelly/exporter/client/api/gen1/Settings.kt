@@ -3,47 +3,47 @@ package click.dobel.shelly.exporter.client.api.gen1
 import com.fasterxml.jackson.annotation.JsonProperty
 
 data class Settings(
-  @JsonProperty("name")
+  @param:JsonProperty("name")
   val name: String,
-  @JsonProperty("lat")
+  @param:JsonProperty("lat")
   val lat: Double,
-  @JsonProperty("lng")
+  @param:JsonProperty("lng")
   val lng: Double,
-  @JsonProperty("led_status_disable")
+  @param:JsonProperty("led_status_disable")
   val isStatusLedDisabled: Boolean,
-  @JsonProperty("fw")
+  @param:JsonProperty("fw")
   val firmwareVersion: String,
 
-  @JsonProperty("device")
+  @param:JsonProperty("device")
   val device: Device,
 
-  @JsonProperty("ap_roaming")
+  @param:JsonProperty("ap_roaming")
   val apRoaming: ApRoaming,
 
   // Shelly Plug only
-  @JsonProperty("max_power")
+  @param:JsonProperty("max_power")
   val maxPower: Double?,
-  @JsonProperty("led_power_disable")
+  @param:JsonProperty("led_power_disable")
   val isPowerLedDisabled: Boolean?,
 ) {
 
   data class Device(
-    @JsonProperty("type")
+    @param:JsonProperty("type")
     val type: String,
-    @JsonProperty("mac")
+    @param:JsonProperty("mac")
     val mac: String,
-    @JsonProperty("hostname")
+    @param:JsonProperty("hostname")
     val hostName: String,
-    @JsonProperty("num_outputs")
+    @param:JsonProperty("num_outputs")
     val outputCount: Int,
-    @JsonProperty("num_meters")
+    @param:JsonProperty("num_meters")
     val meterCount: Int,
   )
 
   data class ApRoaming(
-    @JsonProperty("enabled")
+    @param:JsonProperty("enabled")
     val isEnabled: Boolean,
-    @JsonProperty("threshold")
+    @param:JsonProperty("threshold")
     val threshold: Int,
   )
 }

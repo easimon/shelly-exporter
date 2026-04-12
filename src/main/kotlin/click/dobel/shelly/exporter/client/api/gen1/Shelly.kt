@@ -3,14 +3,14 @@ package click.dobel.shelly.exporter.client.api.gen1
 import com.fasterxml.jackson.annotation.JsonProperty
 
 data class Shelly(
-  @JsonProperty("type")
+  @param:JsonProperty("type")
   val type: String,
-  @JsonProperty("mac")
+  @param:JsonProperty("mac")
   val mac: String,
-  @JsonProperty("auth")
+  @param:JsonProperty("auth")
   val auth: Boolean,
-  @JsonProperty("fw")
+  @param:JsonProperty("fw")
   val firmwareVersion: String,
-  @JsonProperty("longid")
+  @param:JsonProperty("longid")
   val hasLongId: Boolean,
 )
