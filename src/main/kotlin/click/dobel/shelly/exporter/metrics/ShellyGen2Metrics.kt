@@ -135,7 +135,7 @@ class ShellyGen2Metrics(
         "Total memory size in bytes.",
         "bytes",
         tags
-      ) { status(address)?.sys?.ramFree }
+      ) { status(address)?.sys?.ramTotal }
 
       // Shelly Plus 1PM
       val inputTags = tags.and(Tag.of(TAGNAME_CHANNEL, 0.toString()))
