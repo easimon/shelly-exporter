@@ -15,7 +15,7 @@ shelly:
 
   http-params:
     connect-timeout: PT5S
-    request-timeout: PT5S
+    socket-timeout: PT5S
     validation-period: PT0.5S
     time-to-live: PT5S
     max-connections-total: 200

@@ -68,13 +68,13 @@ private fun httpClient(
       .setPoolConcurrencyPolicy(PoolConcurrencyPolicy.LAX)
       .setDefaultSocketConfig(
         SocketConfig.custom()
-          .setSoTimeout(Timeout.of(httpParams.requestTimeout))
+          .setSoTimeout(Timeout.of(httpParams.socketTimeout))
           .build()
       )
       .setDefaultConnectionConfig(
         ConnectionConfig.custom()
           .setConnectTimeout(Timeout.of(httpParams.connectTimeout))
-          .setSocketTimeout(Timeout.of(httpParams.requestTimeout))
+          .setSocketTimeout(Timeout.of(httpParams.socketTimeout))
           .setTimeToLive(TimeValue.of(httpParams.timeToLive))
           .setValidateAfterInactivity(Timeout.of(httpParams.validationPeriod))
           .build()
