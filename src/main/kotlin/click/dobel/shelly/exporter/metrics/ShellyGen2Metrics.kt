@@ -125,6 +125,12 @@ class ShellyGen2Metrics(
         tags
       ) { status(address)?.sys?.ramFree }
       gauge(
+        "memory.free.min",
+        "Minimum free memory size in bytes.",
+        "bytes",
+        tags
+      ) { status(address)?.sys?.ramMinFree }
+      gauge(
         "memory.size",
         "Total memory size in bytes.",
         "bytes",

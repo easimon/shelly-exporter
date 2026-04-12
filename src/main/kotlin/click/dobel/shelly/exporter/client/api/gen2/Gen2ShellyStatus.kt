@@ -78,6 +78,8 @@ data class SysStatus(
 
   @param:JsonProperty("ram_size")
   val ramTotal: Long,
+  @param:JsonProperty("ram_min_free")
+  val ramMinFree: Long?,
   @param:JsonProperty("ram_free")
   val ramFree: Long,
 
