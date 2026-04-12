@@ -65,6 +65,18 @@ class ShellyGen2Metrics(
         tags
       ) { status(address)?.mqtt?.isConnected }
 
+      boolGauge(
+        "matter.commissionable",
+        "Whether the device can be joined to an existing Matter fabric.",
+        tags
+      ) { status(address)?.matter?.isCommissionable }
+      gauge(
+        "matter.fabrics",
+        "The number of Matter fabrics that the device has joined.",
+        "count",
+        tags
+      ) { status(address)?.matter?.numFabrics }
+
       gauge(
         "location.latitude",
         "Latitude of the configured device location, in degrees.",

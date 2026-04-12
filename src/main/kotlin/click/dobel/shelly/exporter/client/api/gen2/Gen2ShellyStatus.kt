@@ -36,6 +36,9 @@ class Gen2ShellyStatus(
   @param:JsonProperty("mqtt")
   val mqtt: Mqtt?,
 
+  @param:JsonProperty("matter")
+  val matter: Matter?,
+
   @param:JsonProperty("sys")
   val sys: SysStatus?,
 
@@ -62,6 +65,13 @@ data class Cloud(
 data class Mqtt(
   @param:JsonProperty("connected")
   val isConnected: Boolean,
+)
+
+data class Matter(
+  @param:JsonProperty("num_fabrics")
+  val numFabrics: Long,
+  @param:JsonProperty("commissionable")
+  val isCommissionable: Boolean,
 )
 
 data class SysStatus(
