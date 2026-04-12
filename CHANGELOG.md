@@ -1,5 +1,25 @@
 # Changelog
 
+## [3.0.0](https://github.com/easimon/shelly-exporter/compare/2.8.0...3.0.0) (2026-04-12)
+
+
+### ⚠ BREAKING CHANGES
+
+* upgrade to kotlin 2.3, spring boot 4, kotest 6, kotlin-logging 7
+
+### Features
+
+* add 2 new metrics for matter-enabled devices: matter.fabrics, matter.commissionable ([809b843](https://github.com/easimon/shelly-exporter/commit/809b843175ef55ec9fe6fba2367c602320e6bfe0))
+* add memory.free.min metric for gen2 devices ([231afdf](https://github.com/easimon/shelly-exporter/commit/231afdf9ffff801612b841998f3077daaaae9d29))
+* decrease default http timeouts from 5 to 2 seconds ([bded484](https://github.com/easimon/shelly-exporter/commit/bded48423dd4bcbd462681a3ee2f4398bf73e427))
+* upgrade to kotlin 2.3, spring boot 4, kotest 6, kotlin-logging 7 ([a9083f4](https://github.com/easimon/shelly-exporter/commit/a9083f477eed9bade4777c797c5fc3b64ead90dc))
+
+
+### Bug Fixes
+
+* gen2 devices reported memory.free (also) as memory.size, now reports actual size ([4a55ac7](https://github.com/easimon/shelly-exporter/commit/4a55ac78e0fe3188561de17cd629fee309d0dd17))
+* rename request timeout config property to socket timeout ([b22bea0](https://github.com/easimon/shelly-exporter/commit/b22bea0e464f9459ddf25b002588636ad79307fe))
+
 ## [2.8.0](https://github.com/easimon/shelly-exporter/compare/2.7.1...2.8.0) (2025-07-28)
 
 
