@@ -38,7 +38,7 @@ abstract class ShellyDeviceRegistry(
   }
 
   open fun updateAddresses() {
-    logger.info("Updating device addresses.")
+    logger.info { "Updating device addresses." }
     val discovered = discoverDevices()
 
     val addedDevices: Set<ShellyDevice>

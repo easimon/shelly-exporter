@@ -268,7 +268,7 @@ class ShellyGen2Metrics(
 
       // Meters, e.g. Shelly Pro EM 50
       for (index in client.status(address)?.em1Statuses?.keys ?: emptySet()) {
-        val meterTags = tags.and(Tag.of(TAGNAME_CHANNEL, index.toString()))
+        val meterTags = tags.and(Tag.of(TAGNAME_CHANNEL, index))
 
         counter(
           "meter.power",

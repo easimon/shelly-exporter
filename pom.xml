@@ -19,7 +19,9 @@
     <java.version>21</java.version>
     <kotlin.version>2.3.20</kotlin.version>
     <kotest.version>6.1.11</kotest.version>
-    <kotlin.logging.version>7.0.14</kotlin.logging.version>
+    <kotlin.logging.version>8.0.01</kotlin.logging.version>
+    <!-- override to mitigate https://github.com/advisories/GHSA-2m67-wjpj-xhg9 -->
+    <jackson-bom.version>3.1.2</jackson-bom.version>
 
     <go-offline-maven-plugin.version>1.2.8</go-offline-maven-plugin.version>
   </properties>
