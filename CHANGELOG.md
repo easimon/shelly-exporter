@@ -1,5 +1,13 @@
 # Changelog
 
+## [3.0.1](https://github.com/easimon/shelly-exporter/compare/3.0.0...3.0.1) (2026-09-14)
+
+
+### Bug Fixes
+
+* :compensate small decreases in counter metric readings ([3aa1c2f](https://github.com/easimon/shelly-exporter/commit/3aa1c2f7e01ee2ece91c228e87cbac58c1d17ea6))
+* compensate small decreases in counter metric readings ([04c3b1c](https://github.com/easimon/shelly-exporter/commit/04c3b1cb3d7ff5b447e7cca3cc36673d81dbb1a8))
+
 ## [3.0.0](https://github.com/easimon/shelly-exporter/compare/2.8.0...3.0.0) (2026-04-12)
 
 
