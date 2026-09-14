@@ -4,11 +4,7 @@ import click.dobel.shelly.exporter.ShellyExporterMetricsConfiguration
 import click.dobel.shelly.exporter.client.ShellyClient
 import click.dobel.shelly.exporter.discovery.ShellyDevice
 import io.github.oshai.kotlinlogging.KLogger
-import io.micrometer.core.instrument.FunctionCounter
-import io.micrometer.core.instrument.Gauge
-import io.micrometer.core.instrument.MeterRegistry
-import io.micrometer.core.instrument.Tag
-import io.micrometer.core.instrument.Tags
+import io.micrometer.core.instrument.*
 
 @Suppress("TooManyFunctions")
 abstract class ShellyMetrics<T : ShellyClient>(
@@ -57,8 +53,17 @@ abstract class ShellyMetrics<T : ShellyClient>(
     tags: Tags,
     func: T.() -> Number?
   ) {
+    // Shelly meters don't persist every counter increment to flash (to protect it from wear),
+    // so a value read after a reboot can be slightly smaller than the last one reported, even
+    // though it never really decreased. The compensator repeats the last greater value while
+    // this looks like such a small decrease, while still passing through genuine resets to
+    // (near) zero, which Prometheus already handles correctly.
+    val monotonic = MonotonicCounterCompensator()
+
     val counterId = FunctionCounter
-      .builder(pre(name), this) { client.runCatching { func() }.getOrNull().orDefault() }
+      .builder(pre(name), this) {
+        monotonic(client.runCatching { func() }.getOrNull().orDefault())
+      }
       .description(description)
       .baseUnit(baseUnit.trimToNull())
       .tags(tags)
