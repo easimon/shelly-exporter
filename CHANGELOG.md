@@ -1,5 +1,19 @@
 # Changelog
 
+## [3.1.0](https://github.com/easimon/shelly-exporter/compare/3.0.1...3.1.0) (2026-09-16)
+
+
+### Features
+
+* add support gen1 emeters ([c961282](https://github.com/easimon/shelly-exporter/commit/c96128271b24cb54694b704c166ca3043517187c))
+
+
+### Bug Fixes
+
+* fix typo in current metric ([b5f71b1](https://github.com/easimon/shelly-exporter/commit/b5f71b19929f84534695af1950cc515bca2a3d09))
+* make WiFi RSSI value optional ([3369f98](https://github.com/easimon/shelly-exporter/commit/3369f981e5c29ce149f21f8c2305997005c2d138))
+* make WiFi RSSI value optional ([bd4d890](https://github.com/easimon/shelly-exporter/commit/bd4d8900aecb349655380ae97146fd7100486640))
+
 ## [3.0.1](https://github.com/easimon/shelly-exporter/compare/3.0.0...3.0.1) (2026-09-14)
 
 
