@@ -1,5 +1,13 @@
 # Changelog
 
+## [3.2.0](https://github.com/easimon/shelly-exporter/compare/3.1.0...3.2.0) (2026-09-16)
+
+
+### Features
+
+* add support for gen2/3 pm devices ([b010c51](https://github.com/easimon/shelly-exporter/commit/b010c513a5d7688f308ac11a6e8be687857f3761))
+* add support for gen2/3 pm devices ([1bb52e3](https://github.com/easimon/shelly-exporter/commit/1bb52e323db93f89ef50b92faec4ad25ca238b37))
+
 ## [3.1.0](https://github.com/easimon/shelly-exporter/compare/3.0.1...3.1.0) (2026-09-16)
 
 
