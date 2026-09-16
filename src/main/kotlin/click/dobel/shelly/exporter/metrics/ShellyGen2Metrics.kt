@@ -224,6 +224,60 @@ class ShellyGen2Metrics(
         ) { status(address)?.switches?.get(index)?.temperature?.fahrenheit }
       }
 
+      // Pure power meters without relay control, e.g. Shelly PM Mini Gen3
+      for (index in client.status(address)?.pm1Statuses?.keys ?: emptySet()) {
+        val pm1Tags = tags.and(Tag.of(TAGNAME_CHANNEL, index.toString()))
+
+        gauge(
+          "meter.power.current",
+          "Momentary power consumption in watts.",
+          "watts",
+          pm1Tags
+        ) { status(address)?.pm1Statuses?.get(index)?.power }
+        gauge(
+          "meter.power.apparent",
+          "Momentary apparent power consumption in watts.",
+          "watts",
+          pm1Tags
+        ) { status(address)?.pm1Statuses?.get(index)?.apparentPower }
+        gauge(
+          "meter.voltage.current",
+          "Momentary voltage in volts.",
+          "volts",
+          pm1Tags
+        ) { status(address)?.pm1Statuses?.get(index)?.voltage }
+        gauge(
+          "meter.current.current",
+          "Momentary current in amperes.",
+          "amperes",
+          pm1Tags
+        ) { status(address)?.pm1Statuses?.get(index)?.current }
+        counter(
+          "meter.power",
+          "Total power consumption in watt-hours.",
+          "watthours",
+          pm1Tags
+        ) { status(address)?.pm1Statuses?.get(index)?.energy?.total }
+        counter(
+          "meter.power.returned",
+          "Total power production in watt-hours (returned to the grid).",
+          "watthours",
+          pm1Tags
+        ) { status(address)?.pm1Statuses?.get(index)?.returnedEnergy?.total }
+        gauge(
+          "meter.powerfactor",
+          "Momentary power factor.",
+          "",
+          pm1Tags
+        ) { status(address)?.pm1Statuses?.get(index)?.powerFactor }
+        gauge(
+          "meter.frequency",
+          "Momentary frequency in Hz.",
+          "Hz",
+          pm1Tags
+        ) { status(address)?.pm1Statuses?.get(index)?.frequency }
+      }
+
       // Meters, e.g. Shelly Plus 3EM
       for (index in client.status(address)?.phaseNames ?: emptySet()) {
         val meterTags = tags.and(Tag.of(TAGNAME_CHANNEL, index.metricName))
