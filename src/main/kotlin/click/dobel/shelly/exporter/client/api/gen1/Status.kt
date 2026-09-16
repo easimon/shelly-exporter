@@ -6,8 +6,14 @@ import com.fasterxml.jackson.annotation.JsonProperty
 data class Status(
   @param:JsonProperty("relays")
   val relays: List<Relay>,
+
+  /** e.g. shelly 1pm or shelly plug with power measurement */
   @param:JsonProperty("meters")
-  val meters: List<Meter>,
+  val meters: List<Meter> = emptyList(),
+
+  /** e.g. shelly em with clamps */
+  @param:JsonProperty("emeters")
+  val emeters: List<Emeter> = emptyList(),
 
   @param:JsonProperty("ram_total")
   val ramTotal: Long,
@@ -79,6 +85,35 @@ data class Status(
   ) {
     @get:JsonIgnore
     val wattHoursTotal get() = wattMinutesTotal / MINUTES_PER_HOUR
+
+    companion object {
+      const val MINUTES_PER_HOUR = 60.0
+    }
+  }
+
+  data class Emeter(
+    @param:JsonProperty("power")
+    val power: Double,
+    @param:JsonProperty("reactive")
+    val reactive: Double?,
+    @param:JsonProperty("pf")
+    val powerFactor: Double?,
+    @param:JsonProperty("current")
+    val current: Double?,
+    @param:JsonProperty("voltage")
+    val voltage: Double?,
+    @param:JsonProperty("is_valid")
+    val isValid: Boolean,
+    @param:JsonProperty("total")
+    val wattMinutesTotal: Double,
+    @param:JsonProperty("total_returned")
+    val wattMinutesTotalReturned: Double?,
+  ) {
+    @get:JsonIgnore
+    val wattHoursTotal get() = wattMinutesTotal / MINUTES_PER_HOUR
+
+    @get:JsonIgnore
+    val wattHoursTotalReturned get() = wattMinutesTotalReturned?.div(MINUTES_PER_HOUR)
 
     companion object {
       const val MINUTES_PER_HOUR = 60.0

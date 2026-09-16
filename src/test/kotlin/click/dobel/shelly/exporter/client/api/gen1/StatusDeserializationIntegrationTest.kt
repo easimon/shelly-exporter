@@ -77,6 +77,51 @@ class StatusDeserializationIntegrationTest(
     }
   """.trimIndent()
 
+  fun statusJson(meters: String? = null, emeters: String? = null): String {
+    val optionalFields = listOfNotNull(
+      meters?.let { """"meters": $it""" },
+      emeters?.let { """"emeters": $it""" },
+    ).joinToString("") { ",\n        $it" }
+
+    return """
+      {
+          "wifi_sta": {
+              "connected": true,
+              "ssid": "my-WLAN",
+              "ip": "192.168.0.88",
+              "rssi": -72
+          },
+          "cloud": {
+              "enabled": false,
+              "connected": false
+          },
+          "mqtt": {
+              "connected": true
+          },
+          "relays": [
+              {
+                  "ison": false,
+                  "has_timer": false,
+                  "timer_started": 0,
+                  "timer_duration": 0,
+                  "timer_remaining": 0,
+                  "source": "mqtt"
+              }
+          ],
+          "update": {
+              "status": "idle",
+              "has_update": false
+          },
+          "ram_total": 51688,
+          "ram_free": 39728,
+          "fs_size": 233681,
+          "fs_free": 150349,
+          "uptime": 8775365
+          $optionalFields
+      }
+    """.trimIndent()
+  }
+
   "Deserializing Status" - {
 
     // https://github.com/easimon/shelly-exporter/issues/103
@@ -86,6 +131,66 @@ class StatusDeserializationIntegrationTest(
       }
 
       status.meters.first().counters shouldBe emptyList()
+    }
+
+    "Should succeed when both meters and emeters are missing" {
+      val status = shouldNotThrowAny {
+        objectMapper.readValue(statusJson(), Status::class.java)
+      }
+
+      status.meters shouldBe emptyList()
+      status.emeters shouldBe emptyList()
+    }
+
+    "Should succeed when meters is present and emeters is missing" {
+      val json = statusJson(meters = """[{"power": 1.5, "is_valid": true}]""")
+
+      val status = shouldNotThrowAny {
+        objectMapper.readValue(json, Status::class.java)
+      }
+
+      status.meters shouldBe listOf(
+        Status.Meter(power = 1.5, overpower = null, isValid = true, timestamp = null)
+      )
+      status.emeters shouldBe emptyList()
+    }
+
+    "Should succeed when emeters is present and meters is missing" {
+      val json = statusJson(
+        emeters = """[{"power": 2.5, "is_valid": true, "total": 10.0, "total_returned": 0.0}]"""
+      )
+
+      val status = shouldNotThrowAny {
+        objectMapper.readValue(json, Status::class.java)
+      }
+
+      status.meters shouldBe emptyList()
+      status.emeters shouldBe listOf(
+        Status.Emeter(
+          power = 2.5,
+          reactive = null,
+          powerFactor = null,
+          current = null,
+          voltage = null,
+          isValid = true,
+          wattMinutesTotal = 10.0,
+          wattMinutesTotalReturned = 0.0
+        )
+      )
+    }
+
+    "Should succeed when both meters and emeters are present" {
+      val json = statusJson(
+        meters = """[{"power": 1.5, "is_valid": true}]""",
+        emeters = """[{"power": 2.5, "is_valid": true, "total": 10.0, "total_returned": 0.0}]"""
+      )
+
+      val status = shouldNotThrowAny {
+        objectMapper.readValue(json, Status::class.java)
+      }
+
+      status.meters.size shouldBe 1
+      status.emeters.size shouldBe 1
     }
   }
 })

@@ -302,8 +302,8 @@ class ShellyGen2Metrics(
         ) { status(address)?.em1Statuses?.get(index)?.voltage }
         gauge(
           "meter.current.current",
-          "Momentary current in ampers.",
-          "ampers",
+          "Momentary current in amperes.",
+          "amperes",
           meterTags
         ) { status(address)?.em1Statuses?.get(index)?.current }
         gauge(
