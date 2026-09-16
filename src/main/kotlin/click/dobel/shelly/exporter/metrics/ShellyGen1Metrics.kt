@@ -188,6 +188,73 @@ class ShellyGen1Metrics(
         ) { status(address)?.meters?.get(index)?.isValid }
       }
 
+      val emeterCount = catchingWithDefault(0) {
+        client.status(address)?.emeters?.size
+      }
+      for (index in 0 until emeterCount) {
+        val emeterTags = tags.and(Tag.of(TAGNAME_CHANNEL, index.toString()))
+
+        counter(
+          "meter.power",
+          "Total power consumption in watt-hours.",
+          "watthours",
+          emeterTags
+        ) { status(address)?.emeters?.get(index)?.wattHoursTotal }
+        counter(
+          "meter.power.native",
+          "Total power consumption in watt-minutes.",
+          "wattminutes",
+          emeterTags
+        ) { status(address)?.emeters?.get(index)?.wattMinutesTotal }
+        gauge(
+          "meter.power.current",
+          "Momentary power consumption in watts.",
+          "watts",
+          emeterTags
+        ) { status(address)?.emeters?.get(index)?.power }
+        counter(
+          "meter.power.returned",
+          "Total power returned in watt-hours.",
+          "watthours",
+          emeterTags
+        ) { status(address)?.emeters?.get(index)?.wattHoursTotalReturned }
+        counter(
+          "meter.power.returned.native",
+          "Total power returned in watt-minutes.",
+          "wattminutes",
+          emeterTags
+        ) { status(address)?.emeters?.get(index)?.wattMinutesTotalReturned }
+        gauge(
+          "meter.reactive.current",
+          "Momentary reactive power in watts.",
+          "watts",
+          emeterTags
+        ) { status(address)?.emeters?.get(index)?.reactive }
+        gauge(
+          "meter.powerfactor",
+          "Momentary power factor.",
+          "",
+          emeterTags
+        ) { status(address)?.emeters?.get(index)?.powerFactor }
+        gauge(
+          "meter.voltage.current",
+          "Momentary voltage.",
+          "volts",
+          emeterTags
+        ) { status(address)?.emeters?.get(index)?.voltage }
+        gauge(
+          "meter.current.current",
+          "Momentary current in amperes.",
+          "amperes",
+          emeterTags
+        ) { status(address)?.emeters?.get(index)?.current }
+        boolGauge(
+          "meter.value.valid",
+          "Whether momentary readings are valid.",
+          emeterTags
+        ) { status(address)?.emeters?.get(index)?.isValid }
+      }
+
       val outputCount = catchingWithDefault(0) {
         client.status(address)?.relays?.size
       }
