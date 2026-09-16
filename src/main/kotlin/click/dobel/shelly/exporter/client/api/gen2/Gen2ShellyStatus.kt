@@ -30,6 +30,10 @@ class Gen2ShellyStatus(
   @param:JsonProperty("switch:0")
   val switch0: Gen2Switch?,
 
+  // Shelly PM Mini Gen3 and similar pure power-metering devices without relay control.
+  @param:JsonProperty("pm1:0")
+  val pm1Status0: Gen2Pm1Status?,
+
   //@param:JsonProperty("eth")
   //@param:JsonProperty("modbus")
 
@@ -53,6 +57,7 @@ class Gen2ShellyStatus(
   val phaseData = emData?.phases
 
   val switches = mapOf(0 to switch0).filterValues { it != null }
+  val pm1Statuses = mapOf(0 to pm1Status0).filterValues { it != null }
   val em1Statuses = mapOf("em0" to em1Status0, "em1" to em1Status1).filterValues { it != null }
   val em1Datas = mapOf("em0" to em1Data0, "em1" to em1Data1).filterValues { it != null }
 }
