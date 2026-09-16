@@ -108,8 +108,9 @@ data class Status(
     val ssid: String,
     @param:JsonProperty("ip")
     val ip: String,
+    /** signal strength in dBm, not available in some devices, when not connected via wifi */
     @param:JsonProperty("rssi")
-    val rssi: Int,
+    val rssi: Int?,
   )
 
   data class Mqtt(

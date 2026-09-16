@@ -1,7 +1,7 @@
 package click.dobel.shelly.exporter.client.api.gen2
 
 import com.fasterxml.jackson.annotation.JsonProperty
-import java.util.EnumSet
+import java.util.*
 
 @Suppress("LongParameterList")
 class Gen2ShellyStatus(
@@ -128,6 +128,7 @@ data class WifiStatus(
   val status: String,
   @param:JsonProperty("ssid")
   val ssid: String?,
+  /** signal strength in dBm, not available in some devices, when not connected via wifi */
   @param:JsonProperty("rssi")
-  val rssi: Int,
+  val rssi: Int?,
 )
