@@ -242,6 +242,18 @@ class ShellyGen2Metrics(
         ) { status(address)?.addOnTemperatures?.get(index)?.fahrenheit }
       }
 
+      // Voltmeters, e.g. Shelly Plus Uni
+      for (index in client.status(address)?.voltmeters?.keys ?: emptySet()) {
+        val voltmeterTags = tags.and(Tag.of(TAGNAME_CHANNEL, index.toString()))
+
+        gauge(
+          "meter.voltage.current",
+          "Momentary voltage in volts.",
+          "volts",
+          voltmeterTags
+        ) { status(address)?.voltmeters?.get(index)?.voltage }
+      }
+
       // Pure power meters without relay control, e.g. Shelly PM Mini Gen3
       for (index in client.status(address)?.pm1Statuses?.keys ?: emptySet()) {
         val pm1Tags = tags.and(Tag.of(TAGNAME_CHANNEL, index.toString()))
