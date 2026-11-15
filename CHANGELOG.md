@@ -1,36 +1,52 @@
 # Changelog
 
-## [3.2.0](https://github.com/easimon/shelly-exporter/compare/3.1.0...3.2.0) (2026-09-16)
-
+## [3.3.0](https://github.com/easimon/shelly-exporter/compare/3.2.0...3.3.0) (2026-11-15)
 
 ### Features
 
-* add support for gen2/3 pm devices ([b010c51](https://github.com/easimon/shelly-exporter/commit/b010c513a5d7688f308ac11a6e8be687857f3761))
-* add support for gen2/3 pm devices ([1bb52e3](https://github.com/easimon/shelly-exporter/commit/1bb52e323db93f89ef50b92faec4ad25ca238b37))
+* support for ShellyPlus UNI voltmeters
+  ([16c4045](https://github.com/easimon/shelly-exporter/commit/16c404546045679b8b698cefd9e83ba4169a5bd1)),
+  fixes https://github.com/easimon/shelly-exporter/issues/156
+* support for ShellyPlus 1PM temperature addon sensors
+  ([4cc8e1c](https://github.com/easimon/shelly-exporter/commit/4cc8e1cb8ca6de4a48a40a5b29af87fa0905ae1b)),
+  fixes https://github.com/easimon/shelly-exporter/issues/157
+* update to JDK 25
+  ([c0a51db](https://github.com/easimon/shelly-exporter/commit/c0a51db9e15e117cce16749f3ff391e67d93da72))
+
+
+## [3.2.0](https://github.com/easimon/shelly-exporter/compare/3.1.0...3.2.0) (2026-09-16)
+
+### Features
+
+* add support for gen2/3 pm devices
+  ([b010c51](https://github.com/easimon/shelly-exporter/commit/b010c513a5d7688f308ac11a6e8be687857f3761))
+* add support for gen2/3 pm devices
+  ([1bb52e3](https://github.com/easimon/shelly-exporter/commit/1bb52e323db93f89ef50b92faec4ad25ca238b37))
 
 ## [3.1.0](https://github.com/easimon/shelly-exporter/compare/3.0.1...3.1.0) (2026-09-16)
 
-
 ### Features
 
-* add support gen1 emeters ([c961282](https://github.com/easimon/shelly-exporter/commit/c96128271b24cb54694b704c166ca3043517187c))
-
+* add support gen1 emeters
+  ([c961282](https://github.com/easimon/shelly-exporter/commit/c96128271b24cb54694b704c166ca3043517187c))
 
 ### Bug Fixes
 
-* fix typo in current metric ([b5f71b1](https://github.com/easimon/shelly-exporter/commit/b5f71b19929f84534695af1950cc515bca2a3d09))
-* make WiFi RSSI value optional ([3369f98](https://github.com/easimon/shelly-exporter/commit/3369f981e5c29ce149f21f8c2305997005c2d138))
-* make WiFi RSSI value optional ([bd4d890](https://github.com/easimon/shelly-exporter/commit/bd4d8900aecb349655380ae97146fd7100486640))
+* fix typo in current metric
+  ([b5f71b1](https://github.com/easimon/shelly-exporter/commit/b5f71b19929f84534695af1950cc515bca2a3d09))
+* make WiFi RSSI value optional
+  ([3369f98](https://github.com/easimon/shelly-exporter/commit/3369f981e5c29ce149f21f8c2305997005c2d138))
+* make WiFi RSSI value optional
+  ([bd4d890](https://github.com/easimon/shelly-exporter/commit/bd4d8900aecb349655380ae97146fd7100486640))
 
 ## [3.0.1](https://github.com/easimon/shelly-exporter/compare/3.0.0...3.0.1) (2026-09-14)
 
-
 ### Bug Fixes
 
-* compensate small decreases in counter metric readings ([3aa1c2f](https://github.com/easimon/shelly-exporter/commit/3aa1c2f7e01ee2ece91c228e87cbac58c1d17ea6))
+* compensate small decreases in counter metric readings
+  ([3aa1c2f](https://github.com/easimon/shelly-exporter/commit/3aa1c2f7e01ee2ece91c228e87cbac58c1d17ea6))
 
 ## [3.0.0](https://github.com/easimon/shelly-exporter/compare/2.8.0...3.0.0) (2026-04-12)
-
 
 ### ⚠ BREAKING CHANGES
 
@@ -38,71 +54,79 @@
 
 ### Features
 
-* add 2 new metrics for matter-enabled devices: matter.fabrics, matter.commissionable ([809b843](https://github.com/easimon/shelly-exporter/commit/809b843175ef55ec9fe6fba2367c602320e6bfe0))
-* add memory.free.min metric for gen2 devices ([231afdf](https://github.com/easimon/shelly-exporter/commit/231afdf9ffff801612b841998f3077daaaae9d29))
-* decrease default http timeouts from 5 to 2 seconds ([bded484](https://github.com/easimon/shelly-exporter/commit/bded48423dd4bcbd462681a3ee2f4398bf73e427))
-* upgrade to kotlin 2.3, spring boot 4, kotest 6, kotlin-logging 7 ([a9083f4](https://github.com/easimon/shelly-exporter/commit/a9083f477eed9bade4777c797c5fc3b64ead90dc))
-
+* add 2 new metrics for matter-enabled devices: matter.fabrics, matter.commissionable
+  ([809b843](https://github.com/easimon/shelly-exporter/commit/809b843175ef55ec9fe6fba2367c602320e6bfe0))
+* add memory.free.min metric for gen2 devices
+  ([231afdf](https://github.com/easimon/shelly-exporter/commit/231afdf9ffff801612b841998f3077daaaae9d29))
+* decrease default http timeouts from 5 to 2 seconds
+  ([bded484](https://github.com/easimon/shelly-exporter/commit/bded48423dd4bcbd462681a3ee2f4398bf73e427))
+* upgrade to kotlin 2.3, spring boot 4, kotest 6, kotlin-logging 7
+  ([a9083f4](https://github.com/easimon/shelly-exporter/commit/a9083f477eed9bade4777c797c5fc3b64ead90dc))
 
 ### Bug Fixes
 
-* gen2 devices reported memory.free (also) as memory.size, now reports actual size ([4a55ac7](https://github.com/easimon/shelly-exporter/commit/4a55ac78e0fe3188561de17cd629fee309d0dd17))
-* rename request timeout config property to socket timeout ([b22bea0](https://github.com/easimon/shelly-exporter/commit/b22bea0e464f9459ddf25b002588636ad79307fe))
+* gen2 devices reported memory.free (also) as memory.size, now reports actual size
+  ([4a55ac7](https://github.com/easimon/shelly-exporter/commit/4a55ac78e0fe3188561de17cd629fee309d0dd17))
+* rename request timeout config property to socket timeout
+  ([b22bea0](https://github.com/easimon/shelly-exporter/commit/b22bea0e464f9459ddf25b002588636ad79307fe))
 
 ## [2.8.0](https://github.com/easimon/shelly-exporter/compare/2.7.1...2.8.0) (2025-07-28)
 
-
 ### Features
 
-* Add support for Shelly Pro EM 50 ([f170bb0](https://github.com/easimon/shelly-exporter/commit/f170bb0e10bb2b6cf867f13285f4c8fc6d71eb9b))
+* Add support for Shelly Pro EM 50
+  ([f170bb0](https://github.com/easimon/shelly-exporter/commit/f170bb0e10bb2b6cf867f13285f4c8fc6d71eb9b))
 
 ## [2.7.1](https://github.com/easimon/shelly-exporter/compare/2.7.0...2.7.1) (2025-06-24)
 
-
 ### Bug Fixes
 
-* support null values in the name property of Gen2ShellyDeviceInfo ([79d3790](https://github.com/easimon/shelly-exporter/commit/79d37903f88bed5ab7003e6182f79d727c77dd23))
-* support null values in the name property of Gen2ShellyDeviceInfo ([26e641f](https://github.com/easimon/shelly-exporter/commit/26e641f78ad5cd09c15fcdc6feb578a1a334887c))
+* support null values in the name property of Gen2ShellyDeviceInfo
+  ([79d3790](https://github.com/easimon/shelly-exporter/commit/79d37903f88bed5ab7003e6182f79d727c77dd23))
+* support null values in the name property of Gen2ShellyDeviceInfo
+  ([26e641f](https://github.com/easimon/shelly-exporter/commit/26e641f78ad5cd09c15fcdc6feb578a1a334887c))
 
 ## [2.7.0](https://github.com/easimon/shelly-exporter/compare/2.6.1...2.7.0) (2025-01-28)
 
-
 ### Features
 
-* Upgrade to OpenJDK 21 ([5e62fa4](https://github.com/easimon/shelly-exporter/commit/5e62fa4c74b7382b718d9fa0f203707526d15148))
-
+* Upgrade to OpenJDK 21
+  ([5e62fa4](https://github.com/easimon/shelly-exporter/commit/5e62fa4c74b7382b718d9fa0f203707526d15148))
 
 ### Bug Fixes
 
-* add caffeine stats, mainly to suppress warning ([ed8cc2d](https://github.com/easimon/shelly-exporter/commit/ed8cc2d600a1ea5a241b9409c31ddad3536eb7a9))
-* total power consumption and production must be counters ([d9c8aa8](https://github.com/easimon/shelly-exporter/commit/d9c8aa8c842de8f29058ea186862e1aec92a38da))
+* add caffeine stats, mainly to suppress warning
+  ([ed8cc2d](https://github.com/easimon/shelly-exporter/commit/ed8cc2d600a1ea5a241b9409c31ddad3536eb7a9))
+* total power consumption and production must be counters
+  ([d9c8aa8](https://github.com/easimon/shelly-exporter/commit/d9c8aa8c842de8f29058ea186862e1aec92a38da))
 
 ## [2.6.1](https://github.com/easimon/shelly-exporter/compare/2.6.0...2.6.1) (2025-01-20)
 
-
 ### Bug Fixes
 
-* refactor code to mitigate invalid smart cast ([#125](https://github.com/easimon/shelly-exporter/issues/125)) ([a5c78a4](https://github.com/easimon/shelly-exporter/commit/a5c78a4308ca04caa616fd08c793f7c5a05153e8))
-* temperature metrics always need a channel ([0627d44](https://github.com/easimon/shelly-exporter/commit/0627d4454970e2166bd9ad70c6048340d707b529))
+* refactor code to mitigate invalid smart cast ([#125](https://github.com/easimon/shelly-exporter/issues/125))
+  ([a5c78a4](https://github.com/easimon/shelly-exporter/commit/a5c78a4308ca04caa616fd08c793f7c5a05153e8))
+* temperature metrics always need a channel
+  ([0627d44](https://github.com/easimon/shelly-exporter/commit/0627d4454970e2166bd9ad70c6048340d707b529))
 
 ## [2.6.0](https://github.com/easimon/shelly-exporter/compare/2.5.9...2.6.0) (2024-12-20)
 
-
 ### Features
 
-* Gen2: Add support for switches and inputs ([fa6715a](https://github.com/easimon/shelly-exporter/commit/fa6715a677c4fe6004f129fc14c6f2736c41aa88))
-
+* Gen2: Add support for switches and inputs
+  ([fa6715a](https://github.com/easimon/shelly-exporter/commit/fa6715a677c4fe6004f129fc14c6f2736c41aa88))
 
 ### Bug Fixes
 
-* Gen2: make all status fields optional ([6123933](https://github.com/easimon/shelly-exporter/commit/6123933831ff511df38fd92ec399e1b37c1671ac))
+* Gen2: make all status fields optional
+  ([6123933](https://github.com/easimon/shelly-exporter/commit/6123933831ff511df38fd92ec399e1b37c1671ac))
 
 ## [2.5.9](https://github.com/easimon/shelly-exporter/compare/2.5.8...2.5.9) (2024-08-05)
 
-
 ### Bug Fixes
 
-* do not require the (unused) 'auth_domain' field in gen 2 deviceinfo ([8330e46](https://github.com/easimon/shelly-exporter/commit/8330e46aaea5dee5e0807d6f190b84e5abaaca5d))
+* do not require the (unused) 'auth_domain' field in gen 2 deviceinfo
+  ([8330e46](https://github.com/easimon/shelly-exporter/commit/8330e46aaea5dee5e0807d6f190b84e5abaaca5d))
 
 ## [2.5.8](https://github.com/easimon/shelly-exporter/compare/2.5.7...2.5.8) (2024-05-30)
 
@@ -228,8 +252,8 @@
 
 ### Features
 
-* expose power consumption in watt-minutes and watt-hours (
-  calculated) ([86025a9](https://github.com/easimon/shelly-exporter/commit/86025a94a69c7d456ebd3ce9ef876b19d9ecf45d))
+* expose power consumption in watt-minutes and watt-hours (calculated)
+  ([86025a9](https://github.com/easimon/shelly-exporter/commit/86025a94a69c7d456ebd3ce9ef876b19d9ecf45d))
 
 ### Bug Fixes
 
