@@ -1,6 +1,6 @@
-ARG BUILD_IMAGE=eclipse-temurin:21
-ARG TEST_IMAGE=eclipse-temurin:21
-ARG RUNTIME_IMAGE=eclipse-temurin:21-jre
+ARG BUILD_IMAGE=eclipse-temurin:25
+ARG TEST_IMAGE=eclipse-temurin:25
+ARG RUNTIME_IMAGE=eclipse-temurin:25-jre
 ARG MAVEN_OPTS="-Xmx2000m"
 
 FROM --platform=$BUILDPLATFORM $BUILD_IMAGE AS builder
