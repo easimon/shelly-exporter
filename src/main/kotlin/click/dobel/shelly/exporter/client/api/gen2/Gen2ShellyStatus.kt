@@ -49,6 +49,18 @@ class Gen2ShellyStatus(
   @param:JsonProperty("temperature:0")
   val temperature: Temperature?,
 
+  // Optional external sensors via Shelly Plus Add-on (e.g. Shelly 1PM Gen3), up to 5.
+  @param:JsonProperty("temperature:100")
+  val temperature100: AddOnTemperature?,
+  @param:JsonProperty("temperature:101")
+  val temperature101: AddOnTemperature?,
+  @param:JsonProperty("temperature:102")
+  val temperature102: AddOnTemperature?,
+  @param:JsonProperty("temperature:103")
+  val temperature103: AddOnTemperature?,
+  @param:JsonProperty("temperature:104")
+  val temperature104: AddOnTemperature?,
+
   @param:JsonProperty("wifi")
   val wifi: WifiStatus?,
 ) {
@@ -60,7 +72,26 @@ class Gen2ShellyStatus(
   val pm1Statuses = mapOf(0 to pm1Status0).filterValues { it != null }
   val em1Statuses = mapOf("em0" to em1Status0, "em1" to em1Status1).filterValues { it != null }
   val em1Datas = mapOf("em0" to em1Data0, "em1" to em1Data1).filterValues { it != null }
+  val addOnTemperatures = mapOf(
+    100 to temperature100,
+    101 to temperature101,
+    102 to temperature102,
+    103 to temperature103,
+    104 to temperature104,
+  ).filterValues { it != null }
 }
+
+data class AddOnTemperature(
+  @param:JsonProperty("id")
+  val id: Int,
+  /** absent when the sensor reports errors */
+  @param:JsonProperty("tC")
+  val celsius: Double?,
+  @param:JsonProperty("tF")
+  val fahrenheit: Double?,
+  @param:JsonProperty("errors")
+  val errors: List<String>?,
+)
 
 data class Cloud(
   @param:JsonProperty("connected")
