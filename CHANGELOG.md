@@ -1,5 +1,13 @@
 # Changelog
 
+## [3.3.0](https://github.com/easimon/shelly-exporter/compare/3.2.0...3.3.0) (2026-11-15)
+
+
+### Features
+
+* support for ShellyPlus UNI voltmeters ([16c4045](https://github.com/easimon/shelly-exporter/commit/16c404546045679b8b698cefd9e83ba4169a5bd1))
+* support for ShellyPlus UNI voltmeters ([f1f9910](https://github.com/easimon/shelly-exporter/commit/f1f991045dd8c5ef3991c0c9ff90e818e6702e3a))
+
 ## [3.2.0](https://github.com/easimon/shelly-exporter/compare/3.1.0...3.2.0) (2026-09-16)
 
 
