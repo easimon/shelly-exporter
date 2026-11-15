@@ -61,6 +61,10 @@ class Gen2ShellyStatus(
   @param:JsonProperty("temperature:104")
   val temperature104: AddOnTemperature?,
 
+  // Shelly Plus Uni with voltmeter add-on peripheral. The Plus Uni supports a single voltmeter (id 100).
+  @param:JsonProperty("voltmeter:100")
+  val voltmeter100: Gen2Voltmeter?,
+
   @param:JsonProperty("wifi")
   val wifi: WifiStatus?,
 ) {
@@ -69,6 +73,7 @@ class Gen2ShellyStatus(
   val phaseData = emData?.phases
 
   val switches = mapOf(0 to switch0).filterValues { it != null }
+  val voltmeters = mapOf(100 to voltmeter100).filterValues { it != null }
   val pm1Statuses = mapOf(0 to pm1Status0).filterValues { it != null }
   val em1Statuses = mapOf("em0" to em1Status0, "em1" to em1Status1).filterValues { it != null }
   val em1Datas = mapOf("em0" to em1Data0, "em1" to em1Data1).filterValues { it != null }
