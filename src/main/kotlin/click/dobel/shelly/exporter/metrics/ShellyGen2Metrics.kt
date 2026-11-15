@@ -224,6 +224,24 @@ class ShellyGen2Metrics(
         ) { status(address)?.switches?.get(index)?.temperature?.fahrenheit }
       }
 
+      // Optional external temperature sensors via Shelly Plus Add-on (channels 100...104)
+      for (index in client.status(address)?.addOnTemperatures?.keys ?: emptySet()) {
+        val sensorTags = tags.and(Tag.of(TAGNAME_CHANNEL, index.toString()))
+
+        gauge(
+          "temperature.degrees.celsius", // FIXME: unit should be in base unit, but collides with fahrenheit then
+          "Device temperature in degrees celsius.",
+          "",
+          sensorTags
+        ) { status(address)?.addOnTemperatures?.get(index)?.celsius }
+        gauge(
+          "temperature.degrees.fahrenheit", // FIXME: unit should be in base unit, but collides with celsius then
+          "Device temperature in degrees fahrenheit.",
+          "",
+          sensorTags
+        ) { status(address)?.addOnTemperatures?.get(index)?.fahrenheit }
+      }
+
       // Pure power meters without relay control, e.g. Shelly PM Mini Gen3
       for (index in client.status(address)?.pm1Statuses?.keys ?: emptySet()) {
         val pm1Tags = tags.and(Tag.of(TAGNAME_CHANNEL, index.toString()))
